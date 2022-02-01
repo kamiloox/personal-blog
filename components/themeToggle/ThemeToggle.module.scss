@@ -1,0 +1,47 @@
+@use '../shared/styles/mixins.scss' as *;
+
+$spaceX: 10px;
+$indicatorSize: 24px;
+$iconsGap: 12px;
+$totalWidth: $spaceX * 2 + $indicatorSize * 2 + $iconsGap;
+
+.wrapper {
+  position: relative;
+}
+
+.toggle {
+  width: $totalWidth;
+  display: flex;
+  border-radius: 20px;
+  gap: $iconsGap;
+  background-color: var(--color-primary);
+  padding: 7px $spaceX;
+}
+
+.indicator {
+  position: absolute;
+  border-radius: 50%;
+  width: $indicatorSize;
+  height: $indicatorSize;
+  left: $spaceX;
+  background-color: var(--color-text);
+
+  transition: all 0.25s;
+}
+
+.input {
+  @include srOnly;
+
+  &:checked + label > .indicator {
+    left: $totalWidth - $spaceX - $indicatorSize;
+  }
+
+  &:focus + label {
+    outline: black solid 2px;
+    outline-offset: 1px;
+  }
+
+  &:focus:not(:focus-visible) + label {
+    outline: 0;
+  }
+}

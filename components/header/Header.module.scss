@@ -12,14 +12,24 @@
 }
 
 .description {
+  @include breakInnerSpans;
   font-size: var(--text-2xl);
   margin-top: 30px;
-}
-
-.descriptionLine {
-  margin: 8px 0;
+  line-height: 1.5;
 }
 
 .about {
   flex: 1;
+}
+
+.rightControls {
+  display: flex;
+  flex-direction: column;
+}
+
+.toggleWithSocials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
 }

@@ -1,12 +1,8 @@
-import { Socials } from '../socials/Socials';
 import styles from './Navigation.module.scss';
 
 export const Navigation = () => (
   <nav>
     <ul className={styles.list}>
-      <li className={styles.socialsWrapper}>
-        <Socials />
-      </li>
       <li className={styles.listItem}>
         <a href="/about" className={styles.link}>
           about me

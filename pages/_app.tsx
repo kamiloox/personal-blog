@@ -1,12 +1,12 @@
-import '../styles/global.scss';
+import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
+import '../styles/global.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
-      <title>Blog</title>
+    <ThemeProvider>
       <Component {...pageProps} />
-    </>
+    </ThemeProvider>
   );
 }
 

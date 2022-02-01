@@ -1,4 +1,6 @@
 import { Navigation } from './navigation/Navigation';
+import { ThemeToggle } from '../themeToggle/ThemeToggle';
+import { Socials } from './socials/Socials';
 import styles from './Header.module.scss';
 
 export const Header = () => (
@@ -8,11 +10,17 @@ export const Header = () => (
         <span>Kamil</span>
         <span>Troczewski</span>
       </h1>
-      <div className={styles.description}>
-        <p className={styles.descriptionLine}>frontend developer based in Poland</p>
-        <p className={styles.descriptionLine}>mostly passionated with ReactJS and TypeScript</p>
-      </div>
+      <p className={styles.description}>
+        <span>frontend developer based in Poland</span>
+        <span>mostly passionated with ReactJS and TypeScript</span>
+      </p>
     </article>
-    <Navigation />
+    <div className={styles.rightControls}>
+      <div className={styles.toggleWithSocials}>
+        <ThemeToggle />
+        <Socials />
+      </div>
+      <Navigation />
+    </div>
   </header>
 );

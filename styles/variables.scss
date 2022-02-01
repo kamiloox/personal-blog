@@ -2,7 +2,15 @@
   --color-text: #14213d;
   --color-background: #ffffff;
   --color-primary: #f1f1f1;
+}
 
+:root[data-theme='dark'] {
+  --color-text: #ffffff;
+  --color-background: #2f3651;
+  --color-primary: #14213d;
+}
+
+:root {
   --text-sm: 0.875rem;
   --text-base: 1rem;
   --text-lg: 1.125rem;
