@@ -1,0 +1,31 @@
+@use '../../shared/styles/mixins.scss' as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 10px;
+  background-color: var(--color-primary);
+}
+
+.nick {
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  margin: 0;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+  margin-left: 50px;
+}
+
+.icon {
+  display: block;
+  fill: var(--color-text);
+  @include hoverable;
+}
+
+.githubIcon {
+  transform: translateY(2px);
+}

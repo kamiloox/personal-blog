@@ -1,0 +1,13 @@
+@mixin breakInnerSpans {
+  & > span {
+    display: block;
+  }
+}
+
+@mixin hoverable {
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(2);
+  }
+}
