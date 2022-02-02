@@ -1,7 +1,8 @@
 @use '../shared/styles/mixins.scss' as *;
 
 .wrapper {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .heading {
@@ -14,12 +15,10 @@
 .description {
   @include breakInnerSpans;
   font-size: var(--text-2xl);
-  margin-top: 30px;
+  letter-spacing: 0.5px;
+  margin-top: 50px;
   line-height: 1.5;
-}
-
-.about {
-  flex: 1;
+  grid-column: span 2;
 }
 
 .rightControls {

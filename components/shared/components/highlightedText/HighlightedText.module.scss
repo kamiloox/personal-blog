@@ -1,0 +1,27 @@
+.text {
+  display: inline-block;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    position: absolute;
+    left: 15%;
+    right: -7%;
+    top: 50%;
+    bottom: 0;
+    z-index: -1;
+  }
+}
+
+.primary {
+  &::before {
+    background-color: #6bb876;
+  }
+}
+
+.secondary {
+  &::before {
+    background-color: #52a5c0;
+  }
+}
