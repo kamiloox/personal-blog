@@ -1,4 +1,5 @@
 @use '../../shared/styles/mixins.scss' as *;
+@use '../../shared/styles/breakpoints.scss' as *;
 
 .list {
   display: flex;
@@ -22,4 +23,11 @@
   padding: 5px;
 
   @include hoverable;
+}
+
+.toggleWithSocials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
 }

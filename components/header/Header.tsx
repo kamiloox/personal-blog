@@ -1,6 +1,4 @@
-import { Navigation } from './navigation/Navigation';
-import { ThemeToggle } from '../themeToggle/ThemeToggle';
-import { Socials } from './socials/Socials';
+import { Menu } from './menu/Menu';
 import { HighlightedText } from '../shared/components/highlightedText/HighlightedText';
 import styles from './Header.module.scss';
 
@@ -12,13 +10,7 @@ export const Header = () => (
         <HighlightedText variant="primary">Troczewski</HighlightedText>
       </span>
     </h1>
-    <div className={styles.rightControls}>
-      <div className={styles.toggleWithSocials}>
-        <ThemeToggle />
-        <Socials />
-      </div>
-      <Navigation />
-    </div>
+    <Menu />
     <p className={styles.description}>
       <span>frontend developer based in Poland</span>
       <span>
