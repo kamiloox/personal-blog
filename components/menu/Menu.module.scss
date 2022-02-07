@@ -1,0 +1,83 @@
+@use '../shared/styles/mixins' as *;
+@use '../shared/styles/breakpoints' as *;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  list-style: none;
+  margin: 5px 0 0;
+  padding: 0;
+
+  @include bpTablet {
+    align-items: center;
+  }
+}
+
+.listItem {
+  margin-bottom: 5px;
+}
+
+.link {
+  display: block;
+  font-weight: var(--font-bold);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: 5px;
+
+  @include hoverable;
+}
+
+.toggleWithSocials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+
+  @include bpTablet {
+    flex-direction: column;
+  }
+}
+
+.hamburgerWrapper {
+  display: none;
+
+  @include bpTablet {
+    display: block;
+    position: fixed;
+    z-index: 20;
+    top: 50px;
+    right: 20px;
+  }
+}
+
+.allControls {
+  display: flex;
+  flex-direction: column;
+
+  @include bpTablet {
+    margin-top: 20vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    z-index: 15;
+  }
+}
+
+.backdrop {
+  @include bpTablet {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-background);
+    filter: opacity(85%) invert(30%);
+    z-index: 10;
+  }
+}

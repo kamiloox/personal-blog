@@ -1,6 +1,7 @@
 .text {
   display: inline-block;
   position: relative;
+  z-index: -1;
 
   &::before {
     content: '';

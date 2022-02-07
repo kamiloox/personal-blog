@@ -1,4 +1,4 @@
-import { Menu } from './menu/Menu';
+import { Menu } from '../menu/Menu';
 import { HighlightedText } from '../shared/components/highlightedText/HighlightedText';
 import styles from './Header.module.scss';
 

@@ -1,19 +1,13 @@
-@use 'sass:map';
+@use '../../../styles/variables.scss' as *;
 
-@mixin bpTabletLandscape {
-  @media (max-width: 1000px) {
+@mixin bpTablet {
+  @media (max-width: $bpTablet) {
     @content;
   }
 }
 
-@mixin bpTabletPortrait {
-  @media (max-width: 800px) {
-    @content;
-  }
-}
-
-@mixin bpPhone {
-  @media (max-width: 600px) {
+@mixin bpMobile {
+  @media (max-width: $bpPhone) {
     @content;
   }
 }
