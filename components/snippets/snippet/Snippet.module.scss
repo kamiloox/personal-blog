@@ -1,0 +1,32 @@
+.linkWrapper {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.wrapper {
+  background-color: var(--color-primary);
+  padding: 30px;
+  border-radius: 20px;
+  transition: filter 0.2s;
+
+  &:hover {
+    filter: brightness(85%);
+  }
+}
+
+.metaInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.heading {
+  font-weight: var(--font-bold);
+  font-size: var(--text-2xl);
+  margin: 14px 0;
+}
+
+.excerpt {
+  font-size: var(--text-lg);
+}

@@ -1,0 +1,14 @@
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  font-weight: var(--font-bold);
+}
+
+.categoryName {
+  font-size: var(--text-lg);
+  filter: invert(15%);
+}
+
+.icon {
+  margin-left: 10px;
+}

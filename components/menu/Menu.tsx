@@ -24,12 +24,12 @@ export const Menu = () => {
 
   return (
     <div>
-      <motion.div
+      {/* <motion.div
         className={styles.backdrop}
         animate={animate}
         variants={backdropVariants}
         initial={false}
-      />
+      /> */}
       <div className={styles.hamburgerWrapper}>
         <Hamburger isActive={isVisibleOnTablet} onClick={handleToggleOnMobile} menuId="menu" />
       </div>

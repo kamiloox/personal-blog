@@ -1,8 +1,9 @@
 import { Layout } from '../components/layout/Layout';
+import { Snippets } from '../components/snippets/Snippets';
 
 const Home = () => (
   <Layout>
-    <p>Hello</p>
+    <Snippets />
   </Layout>
 );
 
