@@ -1,14 +1,26 @@
+import { MDXRemoteSerializeResult } from 'next-mdx-remote';
+
 export enum Breakpoint {
   Phone = '--bp-mobile',
   Tablet = '--bp-tablet',
 }
 
-export type Category = 'typescript' | 'javascript' | 'html' | 'css';
+export enum Category {
+  Typescript = 'typescript',
+  Javascript = 'javascript',
+  Html = 'html',
+  Css = 'css',
+}
 
 export interface ArticleMeta {
   title: string;
   excerpt: string;
-  time: string;
+  date: string;
   slug: string;
   category: Category;
+}
+
+export interface ArticleMdx {
+  meta: ArticleMeta;
+  source: MDXRemoteSerializeResult;
 }

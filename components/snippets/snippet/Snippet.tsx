@@ -6,7 +6,7 @@ interface SnippetProps extends ArticleMeta {
   latest?: boolean;
 }
 
-export const Snippet = ({ excerpt, time, slug, title, category, latest = false }: SnippetProps) => {
+export const Snippet = ({ excerpt, date, slug, title, category, latest = false }: SnippetProps) => {
   const Heading = latest ? 'h2' : 'h3';
 
   return (
@@ -14,7 +14,7 @@ export const Snippet = ({ excerpt, time, slug, title, category, latest = false }
       <article className={styles.wrapper}>
         <header>
           <div className={styles.metaInfo}>
-            <span>{time}</span> {/*TODO: time tag*/}
+            <span>{date}</span> {/*TODO: time tag*/}
             <Category category={category} />
           </div>
           <Heading className={styles.heading}>{title}</Heading>
