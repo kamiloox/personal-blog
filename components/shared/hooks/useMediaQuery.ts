@@ -30,7 +30,7 @@ export const useMediaQuery = (breakpoint: Breakpoint) => {
 
     media.addEventListener('change', updateMatches);
     return () => media.removeEventListener('change', updateMatches);
-  }, [mediaWidth, matches]);
+  }, [mediaWidth, matches, mounted, isLoading]);
 
   return { isLoading, matches };
 };

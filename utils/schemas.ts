@@ -6,5 +6,6 @@ export const articleMetaSchema: Schema<ArticleMeta> = z.object({
   excerpt: z.string(),
   date: z.string(),
   slug: z.string(),
+  published: z.boolean(),
   category: z.nativeEnum(Category),
 });

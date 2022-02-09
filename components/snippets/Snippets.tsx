@@ -1,11 +1,15 @@
 import { Snippet } from './snippet/Snippet';
-import { testSnippets } from './utils/testSnippets';
+import type { ArticleMeta } from '../../types/types';
 import styles from './Snippets.module.scss';
 
-export const Snippets = () => (
+interface SnippetsProps {
+  snippets: ArticleMeta[];
+}
+
+export const Snippets = ({ snippets }: SnippetsProps) => (
   <main className={styles.wrapper}>
-    {testSnippets.map((snippet) => (
-      <Snippet {...snippet} key={snippet.slug} />
+    {snippets.map((snippet, i) => (
+      <Snippet {...snippet} key={snippet.slug} latest={i === 0} />
     ))}
   </main>
 );

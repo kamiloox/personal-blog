@@ -17,7 +17,7 @@ export const ThemeToggle = () => {
         type="checkbox"
         id="theme-toggle"
         className={styles.input}
-        onChange={isMounted ? handleThemeChange : () => {}}
+        onChange={isMounted ? handleThemeChange : () => <></>}
         checked={theme === 'dark'}
       />
       <label htmlFor="theme-toggle" className={styles.toggle}>

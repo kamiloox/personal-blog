@@ -9,7 +9,7 @@ export const useCssVariable = (key: string) => {
       const cssValue = getComputedStyle(document.documentElement).getPropertyValue(key);
       setValue(cssValue);
     }
-  }, []);
+  }, [key]);
 
   return value;
 };
