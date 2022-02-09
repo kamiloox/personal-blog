@@ -4,8 +4,17 @@
   font-weight: var(--font-bold);
 }
 
+.reversed {
+  flex-direction: row-reverse;
+
+  & .icon {
+    margin-left: 0;
+    margin-right: 10px;
+  }
+}
+
 .categoryName {
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   filter: invert(15%);
 }
 

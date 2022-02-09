@@ -4,7 +4,7 @@ import { Snippets } from '../components/snippets/Snippets';
 import { getSnippetsSortedByLatest } from '../lib/articles';
 
 const Home = ({ snippets }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout>
+  <Layout isHome>
     <Snippets snippets={snippets} />
   </Layout>
 );

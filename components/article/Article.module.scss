@@ -1,0 +1,38 @@
+@use '../shared/styles/breakpoints' as *;
+
+.article {
+  margin: 50px 0;
+  padding-top: 20px;
+
+  @include bpTablet {
+    margin: 40px 0;
+  }
+
+  @include bpMobile {
+    margin: 25px 0;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date {
+  font-weight: var(--font-bold);
+}
+
+.heading {
+  font-size: var(--text-5xl);
+  text-align: center;
+  margin: 24px 0;
+
+  @include bpTablet {
+    font-size: var(--text-3xl);
+  }
+}
+
+.header {
+  margin-bottom: 20px;
+}

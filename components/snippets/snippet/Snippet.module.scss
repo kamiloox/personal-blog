@@ -1,3 +1,5 @@
+@use '../../shared/styles/breakpoints.scss' as *;
+
 .linkWrapper {
   display: block;
   text-decoration: none;
@@ -13,6 +15,11 @@
   &:hover {
     filter: brightness(85%);
   }
+
+  @include bpMobile {
+    padding: 35px 20px;
+    border-radius: 10px;
+  }
 }
 
 .metaInfo {
@@ -25,6 +32,10 @@
   font-weight: var(--font-bold);
   font-size: var(--text-2xl);
   margin: 14px 0;
+
+  @include bpMobile {
+    font-size: var(--text-xl);
+  }
 }
 
 .excerpt {

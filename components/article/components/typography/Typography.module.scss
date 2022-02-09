@@ -1,0 +1,13 @@
+@use '../../../shared/styles/breakpoints' as *;
+
+.typography {
+  font-size: var(--text-xl);
+  letter-spacing: 4%;
+  text-align: justify;
+  line-height: 180%;
+
+  @include bpTablet {
+    font-size: var(--text-lg);
+    line-height: 170%;
+  }
+}

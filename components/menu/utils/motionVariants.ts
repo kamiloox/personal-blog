@@ -12,8 +12,10 @@ export const menuVariants: Variants = {
 export const backdropVariants: Variants = {
   opened: {
     opacity: 1,
+    display: 'block',
   },
   closed: {
     opacity: 0,
+    display: 'none',
   },
 };

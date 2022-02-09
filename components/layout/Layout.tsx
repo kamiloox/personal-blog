@@ -4,11 +4,12 @@ import styles from './Layout.module.scss';
 
 interface LayoutProps {
   children: ReactNode;
+  isHome?: boolean;
 }
 
-export const Layout = ({ children }: LayoutProps) => (
+export const Layout = ({ children, isHome = false }: LayoutProps) => (
   <div className={styles.wrapper}>
-    <Header />
+    <Header isHome={isHome} />
     <main>{children}</main>
   </div>
 );

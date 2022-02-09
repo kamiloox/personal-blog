@@ -7,6 +7,7 @@ import { useMediaQuery } from '../shared/hooks/useMediaQuery';
 import { menuVariants, backdropVariants } from './utils/motionVariants';
 import { Breakpoint } from '../../types/types';
 import styles from './Menu.module.scss';
+import Link from 'next/link';
 
 export const Menu = () => {
   const [isVisibleOnTablet, setIsVisibleOnTablet] = useState(false);
@@ -24,12 +25,12 @@ export const Menu = () => {
 
   return (
     <div>
-      {/* <motion.div
+      <motion.div
         className={styles.backdrop}
         animate={animate}
         variants={backdropVariants}
         initial={false}
-      /> */}
+      />
       <div className={styles.hamburgerWrapper}>
         <Hamburger isActive={isVisibleOnTablet} onClick={handleToggleOnMobile} menuId="menu" />
       </div>
@@ -47,14 +48,14 @@ export const Menu = () => {
         <nav>
           <ul className={styles.list}>
             <li className={styles.listItem}>
-              <a href="/about" className={styles.link}>
-                about me
-              </a>
+              <Link href="/about">
+                <a className={styles.link}>about me</a>
+              </Link>
             </li>
             <li className={styles.listItem}>
-              <a href="/articles" className={styles.link}>
-                articles
-              </a>
+              <Link href="/articles">
+                <a className={styles.link}>articles</a>
+              </Link>
             </li>
           </ul>
         </nav>
