@@ -12,9 +12,9 @@ export const Header = ({ isHome = false }: HeaderProps) => (
     <Link href="/">
       <a className={styles.link}>
         <h1 className={styles.heading}>
-          <span>Kamil</span>
+          <span>kamiloox</span>
           <span>
-            <HighlightedText variant="primary">Troczewski</HighlightedText>
+            <HighlightedText variant="primary">frontend blog</HighlightedText>
           </span>
         </h1>
       </a>
@@ -22,9 +22,10 @@ export const Header = ({ isHome = false }: HeaderProps) => (
     <Menu />
     {isHome && (
       <p className={styles.description}>
-        <span>frontend developer based in Poland</span>
+        <span>blog o tematyce frontendowej 👀</span>
         <span>
-          mostly passionated with <HighlightedText variant="secondary">ReactJS</HighlightedText> and{' '}
+          moje ulubione technologie to{' '}
+          <HighlightedText variant="secondary">ReactJS</HighlightedText> oraz{' '}
           <HighlightedText variant="secondary">TypeScript</HighlightedText>
         </span>
       </p>

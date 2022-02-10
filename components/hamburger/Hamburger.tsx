@@ -21,5 +21,6 @@ export const Hamburger = ({ isActive, onClick, menuId }: HamburgerProps) => (
       <Line variant="middle" isActive={isActive} />
       <Line variant="bottom" isActive={isActive} />
     </svg>
+    <span className={styles.name}>menu</span>
   </button>
 );

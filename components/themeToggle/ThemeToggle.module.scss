@@ -45,3 +45,7 @@ $totalWidth: $spaceX * 2 + $indicatorSize * 2 + $iconsGap;
     outline: 0;
   }
 }
+
+.labelText {
+  @include srOnly;
+}

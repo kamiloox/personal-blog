@@ -1,5 +1,5 @@
 .text {
-  display: inline-block;
+  display: inline;
   position: relative;
   z-index: -1;
 
@@ -9,8 +9,8 @@
     position: absolute;
     left: 15%;
     right: -7%;
-    top: 50%;
-    bottom: 0;
+    top: 65%;
+    bottom: 0%;
     z-index: -1;
   }
 }
@@ -23,6 +23,6 @@
 
 .secondary {
   &::before {
-    background-color: #52a5c0;
+    background-color: #6ec0db;
   }
 }

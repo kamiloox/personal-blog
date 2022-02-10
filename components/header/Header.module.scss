@@ -23,6 +23,8 @@
 }
 
 .link {
+  justify-self: start;
+  padding-right: 30px;
   text-decoration: none;
   color: var(--color-text);
 }

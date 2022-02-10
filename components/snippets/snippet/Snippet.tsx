@@ -11,7 +11,7 @@ export const Snippet = ({ excerpt, date, slug, title, category, latest = false }
   const Heading = latest ? 'h2' : 'h3';
 
   return (
-    <Link href={`articles/${slug}`}>
+    <Link href={`/articles/${slug}`}>
       <a className={styles.linkWrapper}>
         <article className={styles.wrapper}>
           <header>

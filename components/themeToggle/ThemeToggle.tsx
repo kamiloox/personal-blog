@@ -23,6 +23,9 @@ export const ThemeToggle = () => {
       <label htmlFor="theme-toggle" className={styles.toggle}>
         <FiMoon size={24} />
         <FiSun size={24} />
+        <span className={styles.labelText}>
+          Przełącz motyw na {theme === 'dark' ? 'jasny' : 'ciemny'}
+        </span>
         <span className={styles.indicator} />
       </label>
     </div>

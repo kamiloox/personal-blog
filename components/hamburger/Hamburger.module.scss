@@ -1,5 +1,11 @@
+@import '../shared/styles/mixins';
+
 .wrapper {
   padding: 10px;
   background-color: transparent;
   border: none;
+}
+
+.name {
+  @include srOnly;
 }

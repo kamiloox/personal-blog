@@ -33,9 +33,9 @@ export const getAllArticles = async () => {
 };
 
 export const getArticlesSlugs = async () => {
-  const articles = await getArticlesFileNames();
+  const articles = await getAllArticles();
 
-  return articles.map((article) => article.replace('.mdx', ''));
+  return articles.map(({ meta: { slug } }) => slug);
 };
 
 export const getArticle = async (slug: string) => {

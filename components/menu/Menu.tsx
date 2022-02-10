@@ -4,7 +4,7 @@ import { Hamburger } from '../hamburger/Hamburger';
 import { ThemeToggle } from '../themeToggle/ThemeToggle';
 import { Socials } from '../socials/Socials';
 import { useMediaQuery } from '../shared/hooks/useMediaQuery';
-import { menuVariants, backdropVariants } from './utils/motionVariants';
+import { menuVariantsDesktop, menuVariantsTablet, backdropVariants } from './utils/motionVariants';
 import { Breakpoint } from '../../types/types';
 import styles from './Menu.module.scss';
 import Link from 'next/link';
@@ -21,7 +21,7 @@ export const Menu = () => {
     return null;
   }
 
-  const animate = isVisibleOnTablet ? 'opened' : 'closed';
+  const animate = isTablet && isVisibleOnTablet ? 'opened' : 'closed';
 
   return (
     <div>
@@ -36,8 +36,8 @@ export const Menu = () => {
       </div>
       <motion.div
         className={styles.allControls}
-        animate={isTablet ? animate : { translateX: '0%' }}
-        variants={menuVariants}
+        animate={animate}
+        variants={isTablet ? menuVariantsTablet : menuVariantsDesktop}
         initial={false}
         id="menu"
       >
@@ -48,13 +48,13 @@ export const Menu = () => {
         <nav>
           <ul className={styles.list}>
             <li className={styles.listItem}>
-              <Link href="/about">
-                <a className={styles.link}>about me</a>
+              <Link href="/">
+                <a className={styles.link}>strona główna</a>
               </Link>
             </li>
             <li className={styles.listItem}>
-              <Link href="/articles">
-                <a className={styles.link}>articles</a>
+              <Link href="/about">
+                <a className={styles.link}>o mnie</a>
               </Link>
             </li>
           </ul>
