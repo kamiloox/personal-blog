@@ -7,28 +7,32 @@ interface HeaderProps {
   isHome?: boolean;
 }
 
-export const Header = ({ isHome = false }: HeaderProps) => (
-  <header className={styles.wrapper}>
-    <Link href="/">
-      <a className={styles.link}>
-        <h1 className={styles.heading}>
-          <span>kamiloox</span>
+export const Header = ({ isHome = false }: HeaderProps) => {
+  const LogoWrapper = isHome ? 'h1' : 'div';
+
+  return (
+    <header className={styles.wrapper}>
+      <Link href="/">
+        <a className={styles.link}>
+          <LogoWrapper className={styles.heading}>
+            <span>kamiloox</span>
+            <span>
+              <HighlightedText variant="primary">frontend blog</HighlightedText>
+            </span>
+          </LogoWrapper>
+        </a>
+      </Link>
+      <Menu />
+      {isHome && (
+        <p className={styles.description}>
+          <span>blog o tematyce frontendowej 👀</span>
           <span>
-            <HighlightedText variant="primary">frontend blog</HighlightedText>
+            moje ulubione technologie to{' '}
+            <HighlightedText variant="secondary">ReactJS</HighlightedText> oraz{' '}
+            <HighlightedText variant="secondary">TypeScript</HighlightedText>
           </span>
-        </h1>
-      </a>
-    </Link>
-    <Menu />
-    {isHome && (
-      <p className={styles.description}>
-        <span>blog o tematyce frontendowej 👀</span>
-        <span>
-          moje ulubione technologie to{' '}
-          <HighlightedText variant="secondary">ReactJS</HighlightedText> oraz{' '}
-          <HighlightedText variant="secondary">TypeScript</HighlightedText>
-        </span>
-      </p>
-    )}
-  </header>
-);
+        </p>
+      )}
+    </header>
+  );
+};

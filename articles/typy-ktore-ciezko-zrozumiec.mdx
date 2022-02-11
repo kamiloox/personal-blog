@@ -1,0 +1,77 @@
+---
+title: Typy które ciężko zrozumieć w Typescripcie
+date: 12-24-2022
+category: typescript
+published: true
+excerpt: Never void unknown any
+---
+
+Praca z Typescriptem jest bardzo przyjemna. Sam dużo rzeczy ułatwia i programowanie w nim sprawia przyjemność. Pozwala pisać taki kod, który na pewno nie przepuści żadnych niedozwolonych operacji. Wyciąga do nas dłoń i chętnie podpowiada nam nawet jaki jest typ zwracany przez funkcję. Natomiast to jest w naszej intencji, aby program był jak najbardziej przygotowany na potencjalne zagrożenia. Dlatego tak ważne jest przypisywanie poprawnego typu funkcjom i zmiennym. Sam Typescript daje dużo możliwości, jednak czasami nie jest to takie proste. Sam przed pisaniem tego artykułu zmagałem się ze zrozumieniem niektórych typów. Artykuł ten traktuje jako możliwość utrwalenia wiedzy, a przy okazji może Tobie też pomogę to zrozumieć.
+
+## Typ void
+
+Typ `void` jako wartość może przyjąć `null` albo `undefined`. Typescript wykorzystuje go jako typ zwracany przez funkcję. Być może zapytasz: _"ale jak to funkcja która nie ma słowa kluczowego `return` coś zwraca?"_. Tak, sama funkcja która z domysłu nic nie zwraca, może zwrócić właśnie typ `void`. Jest to związane nie tyle co z Typescriptem, ale z samym Javascriptem, który gdy nie ma żadnego `return` zwraca właśnie `undefined`.
+
+```ts
+const undefinedValue: void = null;
+const nullValue: void = null;
+
+const voidFunction = () => { // () => void 
+  console.log('Ja nic nie zwracam ;)');
+};
+```
+
+> Uwaga: Próba przypisania wartości może się nie udać jeżeli flaga [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) jest włączona w _tsconfig_. Bardzo zachęcam pozostawic te flagę włączoną, ponieważ chroni ona przed przypisaniem wartości `null` i `undefined`, tam gdzie nie powinno to być możliwe. Typescript lepiej też wtedy podpowiada typy. Natomiast dla demonstracji tego przykładu wyłączyłem tę flagę.
+
+## Typ never
+
+Typ never jest typem który nie istnieje. Jedyne co do niego możemy przypisać to tylko samego siebie - czyli `never`. Tak więc kiedy taki typ jest użyteczny jeżeli on tak naprawdę nic nie może przyjąć? Sami tego typu zazwyczaj nie przypisujemy, chyba że piszemy bibliotekę i mamy w niej jakiś typ warunkowy. Najczęściej jednak Typescript domyśla domyśla się kiedy będzie typ `never`. Łatwiej to będzie przedstawić na przykładzie.
+
+```ts
+const functionWithNeverBlock = (value: number) => {
+  if (typeof value === 'string') {
+    const neverValue = value; // never
+  }
+  const numberValue = value; // number
+}
+```
+
+Ten przykład może wydawać się trochę absurdalny. Z góry przecież wiemy, że nasz argument jest liczbą. Natomiast właśnie na takie przykłady jest przygotowany `never`. Mimo, że to co robimy jest technicznie możliwe, to tak naprawdę ta wartość __jest niczym__, bo ten kod się po prostu w tej klamrze nie wykona. Innym przykładem  są funkcje które nigdy nie skończą się wykonywać, albo takie które nic nie robią poza zgłaszaniem błędu,
+
+```ts
+const throwError = () => { // () => never
+  throw new Error('Ja tu tylko zgłaszam error ;/');
+}
+
+const inifiniteLoop = () => { // () => never
+  while (true) {
+    console.log('Nigdy nie mów nigdy ;)');
+  }
+}
+```
+
+Wszystkie jak dotąd wymienione przykłady otrzymały typ never tylko, że sam Typescript tak się domyślił. Natomiast kiedy może być sensowne użycie tego typu przez nas? Bardzo często wykorzystuje się go przy __typach warunkowych__. Być może nigdy się jeszcze z tym nie zetknąłeś w Typescripcie, natomiast składnia jest bardzo podobna do operatora trójargumentowego w Javascripcie (ang. _ternary operator_).
+
+```ts
+type StringOrNumber<T> = T extends string ? string : number;
+type StringType = StringOrNumber<''> // string
+```
+
+Powyższy przykład zawiera typ warunkowy, który sprawdza czy nasz typ jest liczbą czy stringiem. Bardziej sprawne oko zauważy jednak, że ten kod tak naprawdę ma bardzo dużą wadę. On będzie działał świetnie, gdy jako typ podamy mu stringa bądź liczbę. Natomiast co gdy podamy tam coś innego? Dla przykładu gdy umieścimy tam `boolean`.
+
+```ts
+type ShouldBeNeverType = StringOrNumber<boolean> // number
+```
+
+Jak widać nasz typ przyjął wartość number co jest nieprawidłowe! Powinien przyjąć raczej naszą omawianą wartość `never`. Jak to zrobić?
+
+```ts
+type StringOrNumber<T> = T extends string ? string : T extends number ? number : never;
+type ShouldBeNeverType = StringOrNumber<boolean> // never
+```
+
+Właśnie w taki sposób. Ten operator warunkowy sprawdza czy jego typ jest stringiem lub liczbą. W przeciwnym przypadku ustawia go na `never`.
+
+## Typ any
+
+## Typ unknown

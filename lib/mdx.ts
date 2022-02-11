@@ -1,8 +1,13 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import { articleMetaSchema } from '../utils/schemas';
-import path from 'path';
 import matter from 'gray-matter';
+import path from 'path';
 import fs from 'node:fs/promises';
+
+// @mapbox/rehype-prism -> could not find a declaration file
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import rehypePrism from '@mapbox/rehype-prism';
 
 export const getMdxSource = async (filePath: string) => {
   try {
@@ -11,7 +16,10 @@ export const getMdxSource = async (filePath: string) => {
     const slug = path.basename(filePath).replace('.mdx', '');
 
     const { content, data } = matter(file);
-    const mdxSource = await serialize(content, { scope: { ...data, slug } });
+    const mdxSource = await serialize(content, {
+      scope: { ...data, slug },
+      mdxOptions: { rehypePlugins: [rehypePrism] },
+    });
 
     const parsedArticleMeta = articleMetaSchema.parse(mdxSource.scope);
 
