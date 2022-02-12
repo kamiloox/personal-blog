@@ -1,13 +1,15 @@
 import { MDXRemote } from 'next-mdx-remote';
 import type { ArticleMdx } from '../../types/types';
+import { PageHead } from '../pageHead/PageHead';
 import { Category } from '../category/Category';
 import { mdxComponents } from './utils/mdxComponents';
 import styles from './Article.module.scss';
 
 type ArticleProps = ArticleMdx;
 
-export const Article = ({ source, meta: { title, date, category } }: ArticleProps) => (
+export const Article = ({ source, meta: { title, date, category, excerpt } }: ArticleProps) => (
   <main>
+    <PageHead title={title} description={excerpt} />
     <article className={styles.article}>
       <header className={styles.header}>
         <div className={styles.info}>

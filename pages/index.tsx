@@ -1,15 +1,15 @@
-import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
 import { Layout } from '../components/layout/Layout';
 import { Snippets } from '../components/snippets/Snippets';
 import { getSnippetsSortedByLatest } from '../lib/articles';
+import { PageHead } from '../components/pageHead/PageHead';
 
 const Home = ({ snippets }: InferGetStaticPropsType<typeof getStaticProps>) => (
   <Layout isHome>
-    <Head>
-      <title>kamiloox.dev | frontend blog</title>
-      <meta name="description" content="Frontendowy blog autorstwa kamiloox &copy;" />
-    </Head>
+    <PageHead
+      title="frontend blog"
+      description="Frontendowy blog głównie o tematyce Typescript i ReactJS"
+    />
     <Snippets snippets={snippets} />
   </Layout>
 );

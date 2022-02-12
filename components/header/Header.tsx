@@ -15,9 +15,9 @@ export const Header = ({ isHome = false }: HeaderProps) => {
       <Link href="/">
         <a className={styles.link}>
           <LogoWrapper className={styles.heading}>
-            <span>kamiloox</span>
+            <span>Kamil</span>
             <span>
-              <HighlightedText variant="primary">frontend blog</HighlightedText>
+              <HighlightedText variant="primary">Troczewski</HighlightedText>
             </span>
           </LogoWrapper>
         </a>

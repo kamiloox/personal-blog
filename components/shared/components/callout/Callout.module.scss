@@ -1,0 +1,17 @@
+.wrapper {
+  background-color: var(--color-primary);
+  display: flex;
+  padding: 20px;
+  padding-right: 40px;
+  border-radius: 5px;
+
+  & > p {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+}
+
+.icon {
+  font-size: 28px;
+  margin-right: 20px;
+}

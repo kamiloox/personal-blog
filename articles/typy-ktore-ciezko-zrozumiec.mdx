@@ -1,31 +1,31 @@
 ---
 title: Typy które ciężko zrozumieć w Typescripcie
-date: 12-24-2022
+date: 02-12-2022
 category: typescript
 published: true
-excerpt: Never void unknown any
+excerpt: Void, never, any i unknown. Każdy z nich ma różne zastosowanie. Natomiast czy zawsze wiadomo jaki typ powinniśmy przypisać w różnych sytuacjach? Zazwyczaj tak, ale trzeba być świadomym ich działania, różnic i istnienia.
 ---
 
-Praca z Typescriptem jest bardzo przyjemna. Sam dużo rzeczy ułatwia i programowanie w nim sprawia przyjemność. Pozwala pisać taki kod, który na pewno nie przepuści żadnych niedozwolonych operacji. Wyciąga do nas dłoń i chętnie podpowiada nam nawet jaki jest typ zwracany przez funkcję. Natomiast to jest w naszej intencji, aby program był jak najbardziej przygotowany na potencjalne zagrożenia. Dlatego tak ważne jest przypisywanie poprawnego typu funkcjom i zmiennym. Sam Typescript daje dużo możliwości, jednak czasami nie jest to takie proste. Sam przed pisaniem tego artykułu zmagałem się ze zrozumieniem niektórych typów. Artykuł ten traktuje jako możliwość utrwalenia wiedzy, a przy okazji może Tobie też pomogę to zrozumieć.
+Praca z Typescriptem jest bardzo przyjemna. Sam w sobie dużo rzeczy ułatwia i programowanie w nim sprawia przyjemność. Pozwala pisać taki kod, który na pewno nie przepuści żadnych niedozwolonych operacji. Wyciąga do nas dłoń i chętnie podpowiada nam nawet jaki jest typ zwracany przez funkcję. Natomiast to jest w naszej intencji, aby program był jak najbardziej przygotowany na potencjalne zagrożenia. Dlatego tak ważne jest przypisywanie poprawnego typu funkcjom i zmiennym. Sam Typescript daje dużo możliwości, jednak czasami nie jest to takie proste. Sam przed pisaniem tego artykułu zmagałem się ze zrozumieniem niektórych typów. Artykuł ten traktuje jako możliwość utrwalenia wiedzy, a przy okazji może Tobie też pomogę to zrozumieć.
 
 ## Typ void
 
-Typ `void` jako wartość może przyjąć `null` albo `undefined`. Typescript wykorzystuje go jako typ zwracany przez funkcję. Być może zapytasz: _"ale jak to funkcja która nie ma słowa kluczowego `return` coś zwraca?"_. Tak, sama funkcja która z domysłu nic nie zwraca, może zwrócić właśnie typ `void`. Jest to związane nie tyle co z Typescriptem, ale z samym Javascriptem, który gdy nie ma żadnego `return` zwraca właśnie `undefined`.
+Typ `void` moźe może przyjąć wartość `null` lub `undefined`. Typescript wykorzystuje `void` jako typ zwracany przez funkcję. Być może zapytasz: _"ale jak to funkcja która nie ma słowa kluczowego `return` coś zwraca?"_. Tak, sama funkcja która z domysłu nic nie zwraca, to zwraca właśnie typ `void`. Jest to związane nie tyle co z Typescriptem, ale z samym Javascriptem, który gdy nie ma żadnego `return` zwraca właśnie `undefined`.
 
 ```ts
 const undefinedValue: void = null;
 const nullValue: void = null;
 
 const voidFunction = () => { // () => void 
-  console.log('Ja nic nie zwracam ;)');
+  console.log('Ja nic nie zwracam 🙄');
 };
 ```
 
-> Uwaga: Próba przypisania wartości może się nie udać jeżeli flaga [`strictNullChecks`](https://www.typescriptlang.org/tsconfig#strictNullChecks) jest włączona w _tsconfig_. Bardzo zachęcam pozostawic te flagę włączoną, ponieważ chroni ona przed przypisaniem wartości `null` i `undefined`, tam gdzie nie powinno to być możliwe. Typescript lepiej też wtedy podpowiada typy. Natomiast dla demonstracji tego przykładu wyłączyłem tę flagę.
+<Callout>Próba przypisania wartości może się nie udać jeżeli flaga strictNullChecks jest włączona w tsconfig.json. Bardzo zachęcam pozostawic te flagę włączoną, ponieważ chroni ona przed przypisaniem wartości null i undefined, tam gdzie nie powinno to być możliwe. Typescript lepiej też wtedy podpowiada typy. Natomiast dla demonstracji tego przykładu wyłączyłem tę flagę.</Callout>
 
 ## Typ never
 
-Typ never jest typem który nie istnieje. Jedyne co do niego możemy przypisać to tylko samego siebie - czyli `never`. Tak więc kiedy taki typ jest użyteczny jeżeli on tak naprawdę nic nie może przyjąć? Sami tego typu zazwyczaj nie przypisujemy, chyba że piszemy bibliotekę i mamy w niej jakiś typ warunkowy. Najczęściej jednak Typescript domyśla domyśla się kiedy będzie typ `never`. Łatwiej to będzie przedstawić na przykładzie.
+Typ never jest typem który nie istnieje. Jedyne co do niego możemy przypisać to tylko samego siebie - czyli `never`. Tak więc kiedy taki typ jest użyteczny, jeżeli on tak naprawdę nic nie może przyjąć? Zazwyczaj sami tego typu nie przypisujemy, chyba że piszemy bibliotekę i mamy w niej jakiś typ warunkowy, ale o tym poźniej. Najczęściej jednak Typescript domyśla się kiedy będzie typ `never`. Łatwiej to będzie przedstawić na przykładzie.
 
 ```ts
 const functionWithNeverBlock = (value: number) => {
@@ -36,7 +36,7 @@ const functionWithNeverBlock = (value: number) => {
 }
 ```
 
-Ten przykład może wydawać się trochę absurdalny. Z góry przecież wiemy, że nasz argument jest liczbą. Natomiast właśnie na takie przykłady jest przygotowany `never`. Mimo, że to co robimy jest technicznie możliwe, to tak naprawdę ta wartość __jest niczym__, bo ten kod się po prostu w tej klamrze nie wykona. Innym przykładem  są funkcje które nigdy nie skończą się wykonywać, albo takie które nic nie robią poza zgłaszaniem błędu,
+Ten przykład może wydawać się trochę absurdalny. Z góry przecież wiemy, że nasz argument jest liczbą. Natomiast właśnie na takie przykłady jest przygotowany `never`. Mimo, że to co robimy jest technicznie możliwe, to tak naprawdę ta wartość __jest niczym__, bo ten kod się po prostu w tej klamrze nie wykona. Innym przykładem są funkcje które nigdy nie skończą się wykonywać, albo takie które nic nie robią poza zgłaszaniem błędu.
 
 ```ts
 const throwError = () => { // () => never
@@ -45,7 +45,7 @@ const throwError = () => { // () => never
 
 const inifiniteLoop = () => { // () => never
   while (true) {
-    console.log('Nigdy nie mów nigdy ;)');
+    console.log('Nigdy nie mów nigdy 😜');
   }
 }
 ```
@@ -74,4 +74,48 @@ Właśnie w taki sposób. Ten operator warunkowy sprawdza czy jego typ jest stri
 
 ## Typ any
 
+Jest to najbardziej kojarzony typ z wszystkich typów, które opisuje w tym artykule. Do niego można przypisać każdą wartość, która jest poprawna w Javascripcie. Dlatego trzeba bardzo uważać. Taka wolność, nie jest dobra. Powinno się `any` używać bardzo świadomie i tylko w rzadkich przypadkach. Bardzo często `any` wykorzystuje się w sytuacjach gdy przepisuje się kod z Javascriptu do Typescriptu. Jednak z czasem rozwoju te typy zamienia się na bardziej specyficzne.
+
+```ts
+let anyValue: any = 7312;
+anyValue = 'moge byc stringiem';
+anyValue = { lub: 'moge byc obiektem' };
+anyValue = ['nawet', 'tablica'];
+```
+
+To co wyżej się dzieje jest bardzo niebezpieczne. Gdy spróbujemy odwołać się do klucza obiektu, który w tym momencie może być liczbą, Typescript nie będzie na nas krzyczał, i nie wskaże nam błędu. Używając `any` niejako mówimy typescriptowi: _"Słuchaj Typescript, nie bój się dałem `any` i ja to ogarnę"_. Dlatego ten typ trzeba omijać. A co zrobić w wypadku gdy naprawdę nie wiemy jaki typ będzie miała nasza wartość?
+
 ## Typ unknown
+
+Tak jak w `any` do typu `unknown` można przypisać każdą wartość. Natomiast samego typu `unknown` nie można przypisywać do innych typów. Trochę brzmi to jak naukowy bełkot. Przykład na pewno tutaj pomoże w zrozumieniu.
+
+```ts
+let unknownValue: unknown =  7312;
+unknownValue = 'moge byc stringiem';
+unknownValue = { lub: 'moge byc obiektem' };
+unknownValue = ['nawet', 'tablica'];
+
+const errorUnknown: number = unknownValue; // Error
+const numberValue: number = typeof unknownValue === 'number' ? unknownValue : 0; // unknownValue || 0
+```
+
+Jak widać do typu `unknown` przypisaliśmy takie same wartości jak wcześniej co do typu `any`. Natomiast gdy chcemy tą zmienną przypisać do zmiennej o innym typie to mamy błąd. Musimy najpierw sprawdzić czy zmienna jest poprawnego typu w trakcie działania programu. Dlatego `unknown` wprowadza duży stopień bezpieczeństwa i pozwola nam spać troszkę lepiej.
+
+Typ `unknown` bardzo często jest wykorzystywany przy łapaniu błędów w bloku `catch`. Nigdy nie mamy przecież pewności jakiego typu jest nasz error. Być może jest stringiem, a może obiektem, a może jeszcze czymś innym. Zamiast zgadywania lepiej już wcześniej poprawnie otypować sobie error, i na jego zasadzie sprawdzać możliwe przypadki.
+
+```ts
+const thisThrowsError = async () => {
+  try {
+    await likelyToBreak();
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return console.error(err.message);
+    }
+    console.error('Oops, coś poszło nie tak');
+  }
+}
+```
+
+## Podsumowanie
+
+Nie ukrywam, że tej wiedzy odnośnie typów trochę jest. Omówiliśmy właściwie cztery: `void`, `never`, `any` i `unknown`. Każdy z nich ma różne zastosowanie. Natomiast czy zawsze wiadomo jaki typ powinniśmy przypisać w różnych sytuacjach? Zazwyczaj tak, ale trzeba być świadomym ich działania, różnic i istnienia.
