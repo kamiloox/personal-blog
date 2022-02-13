@@ -37,8 +37,10 @@ $totalWidth: $spaceX * 2 + $indicatorSize * 2 + $iconsGap;
   }
 
   &:focus + label {
-    outline: black solid 2px;
-    outline-offset: 1px;
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: invert;
+    outline-offset: 2px;
   }
 
   &:focus:not(:focus-visible) + label {

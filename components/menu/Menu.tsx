@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import Link from 'next/link';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Hamburger } from '../hamburger/Hamburger';
 import { ThemeToggle } from '../themeToggle/ThemeToggle';
@@ -6,16 +7,27 @@ import { Socials } from '../socials/Socials';
 import { useMediaQuery } from '../shared/hooks/useMediaQuery';
 import { menuVariantsDesktop, menuVariantsTablet, backdropVariants } from './utils/motionVariants';
 import { Breakpoint } from '../../types/types';
+import { routes } from '../../utils/routes';
 import styles from './Menu.module.scss';
-import Link from 'next/link';
 
 export const Menu = () => {
   const [isVisibleOnTablet, setIsVisibleOnTablet] = useState(false);
   const { matches: isTablet, isLoading } = useMediaQuery(Breakpoint.Tablet);
+  const navWrapperRef = useRef<HTMLElement>(null);
 
   const handleToggleOnMobile = () => {
     setIsVisibleOnTablet(!isVisibleOnTablet);
   };
+
+  const closeMenu = useCallback(() => {
+    if (!isTablet && isVisibleOnTablet) {
+      setIsVisibleOnTablet(false);
+    }
+  }, [isTablet, isVisibleOnTablet]);
+
+  useEffect(() => {
+    closeMenu();
+  }, [closeMenu]);
 
   if (isLoading) {
     return null;
@@ -45,16 +57,32 @@ export const Menu = () => {
           <ThemeToggle />
           <Socials />
         </div>
-        <nav>
+        <nav ref={navWrapperRef}>
           <ul className={styles.list}>
             <li className={styles.listItem}>
-              <Link href="/">
-                <a className={styles.link}>strona główna</a>
+              <Link href={routes.home}>
+                <a
+                  className={styles.link}
+                  onClick={closeMenu}
+                  onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
+                  role="link"
+                  tabIndex={0}
+                >
+                  strona główna
+                </a>
               </Link>
             </li>
             <li className={styles.listItem}>
-              <Link href="/about">
-                <a className={styles.link}>o mnie</a>
+              <Link href={routes.about}>
+                <a
+                  className={styles.link}
+                  onClick={closeMenu}
+                  onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
+                  role="link"
+                  tabIndex={0}
+                >
+                  o mnie
+                </a>
               </Link>
             </li>
           </ul>

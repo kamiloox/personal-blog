@@ -1,3 +1,5 @@
+@use '../../styles/breakpoints' as *;
+
 .wrapper {
   background-color: var(--color-primary);
   display: flex;
@@ -9,9 +11,19 @@
     margin: 0;
     font-size: var(--text-lg);
   }
+
+  @include bpMobile {
+    padding: 20px 10px;
+    padding-right: 20px;
+  }
 }
 
 .icon {
   font-size: 28px;
   margin-right: 20px;
+
+  @include bpMobile {
+    font-size: 22px;
+    margin-right: 10px;
+  }
 }

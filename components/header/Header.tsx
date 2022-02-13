@@ -1,5 +1,6 @@
 import { Menu } from '../menu/Menu';
 import { HighlightedText } from '../shared/components/highlightedText/HighlightedText';
+import { routes } from '../../utils/routes';
 import Link from 'next/link';
 import styles from './Header.module.scss';
 
@@ -12,10 +13,10 @@ export const Header = ({ isHome = false }: HeaderProps) => {
 
   return (
     <header className={styles.wrapper}>
-      <Link href="/">
+      <Link href={routes.home}>
         <a className={styles.link}>
           <LogoWrapper className={styles.heading}>
-            <span>Kamil</span>
+            <span>Kamil </span>
             <span>
               <HighlightedText variant="primary">Troczewski</HighlightedText>
             </span>

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { DOMAIN_NAME } from '../../utils/constants';
 
 interface PageHeadProps {
   title: string;
@@ -7,7 +8,9 @@ interface PageHeadProps {
 
 export const PageHead = ({ title, description }: PageHeadProps) => (
   <Head>
-    <title>troczewski.dev | {title}</title>
+    <title>
+      {DOMAIN_NAME} | {title}
+    </title>
     <meta name="description" content={description} />
   </Head>
 );
