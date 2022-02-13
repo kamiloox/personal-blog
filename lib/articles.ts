@@ -11,19 +11,24 @@ const getArticlePath = (name: string) => {
 };
 
 export const getAllArticles = async () => {
-  const filePaths = await fs.readdir(ARTICLES_DIR);
+  try {
+    const filePaths = await fs.readdir(ARTICLES_DIR);
 
-  const articles = await Promise.all(
-    filePaths.map((filePath) => {
-      return getMdxSource(getArticlePath(filePath));
-    }),
-  );
+    const articles = await Promise.all(
+      filePaths.map((filePath) => {
+        return getMdxSource(getArticlePath(filePath));
+      }),
+    );
 
-  if (isProduction) {
-    return articles.filter(({ meta }) => meta.published);
+    if (isProduction) {
+      return articles.filter(({ meta }) => meta.published);
+    }
+
+    return articles;
+  } catch (err) {
+    console.error('Cannot get all articles', err);
+    return [];
   }
-
-  return articles;
 };
 
 export const getArticlesSlugs = async () => {

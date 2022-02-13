@@ -1,0 +1,15 @@
+@use '../../styles/mixins' as *;
+
+.wrapper {
+  margin-top: 50px;
+  font-size: var(--text-3xl);
+  font-weight: var(--font-semibold);
+  text-align: center;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: var(--text-xl);
+  @include hoverable;
+}

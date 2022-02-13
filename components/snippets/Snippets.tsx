@@ -7,9 +7,9 @@ interface SnippetsProps {
 }
 
 export const Snippets = ({ snippets }: SnippetsProps) => (
-  <main className={styles.wrapper}>
+  <section className={styles.wrapper}>
     {snippets.map((snippet, i) => (
       <Snippet {...snippet} key={snippet.slug} latest={i === 0} />
     ))}
-  </main>
+  </section>
 );
