@@ -1,31 +1,39 @@
-import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { Article } from '../../components/article/Article';
 import { Layout } from '../../components/layout/Layout';
 import { getArticle, getArticlesSlugs } from '../../lib/articles';
+import { ArticleMdx } from '../../types/types';
+import { parseParam } from '../../utils/helpers';
 
-const ArticlePage = (article: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout>
+interface ArticlePageProps {
+  article: ArticleMdx;
+}
+
+const ArticlePage: NextPage<ArticlePageProps> = ({ article }) => (
+  <Layout title={article.meta.title} description={article.meta.excerpt}>
     <Article {...article} />
   </Layout>
 );
 
-export default ArticlePage;
-
-export const getStaticProps = async ({ params }: GetStaticPropsContext<{ slug: string }>) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug;
 
   if (!slug) {
-    throw new Error(`Provided slug '${slug}' does not exists!`);
+    return {
+      notFound: true,
+    };
   }
 
-  const article = await getArticle(slug);
+  const article = await getArticle(parseParam(slug));
 
   if (!article) {
-    throw new Error(`Cannot find article with given slug ${slug}`);
+    return {
+      notFound: true,
+    };
   }
 
   return {
-    props: article,
+    props: { article },
   };
 };
 
@@ -39,3 +47,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
     fallback: false,
   };
 };
+
+export default ArticlePage;

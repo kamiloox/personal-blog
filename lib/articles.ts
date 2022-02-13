@@ -10,14 +10,8 @@ const getArticlePath = (name: string) => {
   return path.join(process.cwd(), 'articles', name);
 };
 
-const getArticlesFileNames = async () => {
-  const slugs = await fs.readdir(ARTICLES_DIR);
-
-  return slugs;
-};
-
 export const getAllArticles = async () => {
-  const filePaths = await getArticlesFileNames();
+  const filePaths = await fs.readdir(ARTICLES_DIR);
 
   const articles = await Promise.all(
     filePaths.map((filePath) => {
@@ -46,13 +40,13 @@ export const getArticle = async (slug: string) => {
   }
 
   const fileName = `${slug}.mdx`;
-  const source = await getMdxSource(getArticlePath(fileName));
+  const article = await getMdxSource(getArticlePath(fileName));
 
-  if (isProduction && !source.meta.published) {
+  if (isProduction && !article.meta.published) {
     return null;
   }
 
-  return source;
+  return article;
 };
 
 export const getSnippetsSortedByLatest = async () => {

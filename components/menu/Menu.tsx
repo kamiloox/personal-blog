@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Hamburger } from '../hamburger/Hamburger';
 import { ThemeToggle } from '../themeToggle/ThemeToggle';
@@ -24,10 +24,6 @@ export const Menu = () => {
       setIsVisibleOnTablet(false);
     }
   }, [isTablet, isVisibleOnTablet]);
-
-  useEffect(() => {
-    closeMenu();
-  }, [closeMenu]);
 
   if (isLoading) {
     return null;
@@ -65,8 +61,6 @@ export const Menu = () => {
                   className={styles.link}
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
-                  role="link"
-                  tabIndex={0}
                 >
                   strona główna
                 </a>
@@ -78,8 +72,6 @@ export const Menu = () => {
                   className={styles.link}
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
-                  role="link"
-                  tabIndex={0}
                 >
                   o mnie
                 </a>

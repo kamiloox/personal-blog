@@ -1,25 +1,29 @@
-import { InferGetStaticPropsType } from 'next';
+import { GetStaticProps, NextPage } from 'next';
 import { Layout } from '../components/layout/Layout';
 import { Snippets } from '../components/snippets/Snippets';
 import { getSnippetsSortedByLatest } from '../lib/articles';
-import { PageHead } from '../components/pageHead/PageHead';
+import { ArticleMeta } from '../types/types';
 
-const Home = ({ snippets }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout isHome>
-    <PageHead
-      title="frontend blog"
-      description="Frontendowy blog głównie o tematyce Typescript i ReactJS"
-    />
+interface HomeProps {
+  snippets: ArticleMeta[];
+}
+
+const HomePage: NextPage<HomeProps> = ({ snippets }) => (
+  <Layout
+    title="frontend blog"
+    description="Frontendowy blog głównie o tematyce Typescript i ReactJS"
+    isHome
+  >
     <Snippets snippets={snippets} />
   </Layout>
 );
 
-export default Home;
-
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const snippets = await getSnippetsSortedByLatest();
 
   return {
     props: { snippets },
   };
 };
+
+export default HomePage;

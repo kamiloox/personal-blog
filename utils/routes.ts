@@ -1,9 +1,10 @@
-export const routes = {
+export const externalRoutes = {
   github: 'https://github.com/kamiloox',
   linkedin: 'https://www.linkedin.com/in/kamiloox/',
+} as const;
+
+export const routes = {
   home: '/',
   about: '/about',
-  article: (slug: string) => {
-    return `/articles/${slug}`;
-  },
+  articles: '/articles',
 } as const;

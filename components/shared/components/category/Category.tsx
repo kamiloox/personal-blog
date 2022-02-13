@@ -1,4 +1,4 @@
-import type { Category as CategoryType } from '../../types/types';
+import type { Category as CategoryType } from '../../../../types/types';
 import { icons } from './utils/icons';
 import styles from './Category.module.scss';
 
