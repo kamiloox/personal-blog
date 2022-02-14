@@ -37,12 +37,6 @@ export const lineVariants: Record<LineVariant, Variants> = {
   },
 };
 
-export const linePosY: Record<LineVariant, number> = {
-  top: TOP,
-  middle: CENTER,
-  bottom: BOTTOM,
-};
-
 export const getAnimateProp = (isActive: boolean) => {
   return isActive ? 'opened' : 'closed';
 };

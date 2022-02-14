@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import type { LineVariant } from '../types/types';
 import { LINE_HEIGHT, WIDTH } from '../utils/constants';
-import { lineVariants, getAnimateProp, linePosY } from '../utils/lineVariants';
+import { lineVariants, getAnimateProp } from '../utils/lineVariants';
 import styles from './Line.module.scss';
 
 interface LineProps {
@@ -18,8 +18,6 @@ export const Line = ({ variant, isActive }: LineProps) => {
       width={WIDTH}
       height={LINE_HEIGHT}
       rx={LINE_HEIGHT / 2}
-      y1={linePosY[variant]}
-      y2={linePosY[variant] + LINE_HEIGHT}
       className={styles.line}
       animate={animate}
       initial={false}

@@ -18,6 +18,14 @@ export const Layout = ({ children, title, description, isHome = false }: LayoutP
         {DOMAIN_NAME} | {title}
       </title>
       <meta name="description" content={description} />
+      <meta name="og:description" content={description} />
+      <meta name="og:locale" content="pl_PL" />
+      <meta name="og:image:url" content="/images/og-image-png" />
+      <meta name="og:image:secure_url" content="/images/og-image.jpg" />
+      <meta name="og:image:type" content="image/jpeg" />
+      <meta name="og:image:width" content="781" />
+      <meta name="og:image:height" content="316" />
+      <meta name="og:image:alt" content="Frontendowy blog" />
     </Head>
     <Header isHome={isHome} />
     <main>{children}</main>

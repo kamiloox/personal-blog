@@ -2,7 +2,7 @@
 
 .typography {
   font-size: var(--text-xl);
-  letter-spacing: 4%;
+  letter-spacing: 0.5px;
   line-height: 180%;
 
   @include bpTablet {

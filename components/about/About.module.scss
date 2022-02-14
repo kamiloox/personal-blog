@@ -1,0 +1,34 @@
+@use '../shared/styles/breakpoints' as *;
+@use '../shared/styles/mixins' as *;
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 4fr 2fr;
+  column-gap: 30px;
+  margin: 50px 0;
+
+  @include bpTablet {
+    margin: 30px 0;
+    grid-template-columns: 3fr 2fr;
+  }
+
+  @include bpMobile {
+    grid-template-columns: auto;
+  }
+}
+
+.technologies {
+  display: flex;
+  flex-direction: column;
+}
+
+.technologiesIcons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+}
+
+.link {
+  color: var(--color-text);
+  @include hoverable;
+}
