@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { ReactNode } from 'react';
-import { DOMAIN_NAME } from '../../utils/constants';
+import { DOMAIN_NAME, FULL_ADDRESS } from '../../utils/constants';
 import { Header } from '../header/Header';
 import styles from './Layout.module.scss';
 
@@ -18,14 +18,16 @@ export const Layout = ({ children, title, description, isHome = false }: LayoutP
         {DOMAIN_NAME} | {title}
       </title>
       <meta name="description" content={description} />
-      <meta name="og:description" content={description} />
-      <meta name="og:locale" content="pl_PL" />
-      <meta name="og:image:url" content="/images/og-image-png" />
-      <meta name="og:image:secure_url" content="/images/og-image.jpg" />
-      <meta name="og:image:type" content="image/jpeg" />
-      <meta name="og:image:width" content="781" />
-      <meta name="og:image:height" content="316" />
-      <meta name="og:image:alt" content="Frontendowy blog" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:locale" content="pl_PL" />
+      <meta property="og:url" content={FULL_ADDRESS} />
+      <meta property="og:image" content={`${FULL_ADDRESS}/images/og-hero.jpg`} />
+      <meta property="og:image:type" content="image/jpeg" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Frontendowy blog" />
     </Head>
     <Header isHome={isHome} />
     <main>{children}</main>
