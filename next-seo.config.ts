@@ -23,4 +23,7 @@ export const SEO: DefaultSeoProps = {
       },
     ],
   },
+  twitter: {
+    cardType: 'summary_large_image',
+  },
 };
