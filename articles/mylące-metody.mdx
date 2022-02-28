@@ -1,0 +1,111 @@
+---
+title: Mylące metody 🤷‍♂️
+date: 02-27-2022
+category: javascript
+published: true
+excerpt: Czy zdarzyło ci się kiedyś, żeby skorzystać z metody split, splice albo slice? Mi tak i szczerze ciężko mi czasem je rozróżnić, bo wszystkie się podobnie nazywają. Mimo to zobaczmy czy da się jakoś je oddzielić i zapamiętać.
+---
+
+Czy zdarzyło ci się kiedyś, żeby skorzystać z metody split, splice albo slice? Jeżeli tak i w trakcie ich używania nie zajrzałeś do dokumentacji, to jesteś naprawdę dużym szczęściarzem. Ja zawsze muszę zerknąć, bo wszystkie się podobnie nazywają, ale może da się jakoś w tym odnaleźć? Zobaczmy.
+
+## Splice
+
+`Splice` zmienia zawartość tablicy - usuwa elementy, zamienia bądz dodaje nowe. Jako pierwszy argument przyjmuje indeks od którego ma zacząć operacje. Drugi argument jest opcjonalny i określa ilość elementów do zmodyfikowania. Pozostałymi argumentami to elementy jakie opcjonalnie chcemy dodać. __Ważne jest to że splice mutuje zawartość tablicy!__.
+
+```js
+// splice(indeksStartowy, ileUsunąć, element1, element2, elementN)
+
+const array = ['zero', 'pierwszy', 'drugi', 'trzeci'];
+
+array.splice(2, 0, 'element-1', 'element-2');
+
+// ["zero", "pierwszy", "element-1", "element-2", "drugi", "trzeci"]
+console.log(array)
+
+// Usuwa od indeksu -2 (czyli 2 od końca) łącznie 2 elementy 
+const removed = array.splice(-2, 2);
+
+// ["drugi", "trzeci"] 
+console.log(removed);
+
+// ["zero", "first", "element-1", "element-2"]
+console.log(array)
+
+// Usuwa wszystko od indeksu 0 do końca
+array.splice(0);
+
+// []
+console.log(array);
+```
+
+## Slice
+
+Jest bardzo podobny do `splice` ale z jedną bardzo ważna różnicą - zwraca __[shallow copy](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy)__ tablicy, czyli w praktyce zostaje zwrócona referencja!
+
+Samo w sobie shallow copy tworzy _płytką kopię_. Jeżeli slice zwróci tablicę obiektów, i w jednym z nich nastąpi jakaś zmiana, to zmiany te będą też miały wpływ na tablicę początkowa (Ponieważ działamy na referencji!). Jest to bardzo niebezpieczne działanie. Jak ktoś zapomni i dokona modyfikacji obiektu, może później dojść do jakiś dziwnych i nieoczekiwanych zachowań. Można jednak to ominąć dzięki __[deep copy](https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy)__. Wtedy każda mutacja nie będzie miała wpływu na obydwie tablice. 
+
+```js
+// Shallow copy
+const array = [{ value: 'zero' }, { value: 'first' }, { value: 'second' }, { value: 'third' }];
+
+const shallow = array.slice(0, 1);
+shallow[0].value = 'modified';
+
+// { value: 'modified' };
+console.log(array[0]);
+
+// Deep copy
+const array2 = [{ value: 'zero' }, { value: 'first' }, { value: 'second' }, { value: 'third' }];
+
+const deep = JSON.parse(JSON.stringify(array2.slice(0, 1)));
+deep[0].value = 'modified';
+
+// { value: 'zero' };
+console.log(array2[0]);
+```
+
+Slice istnieje także dla stringa. Dzięki niemu można _wyłuskiwać_ jakieś konkretne fragmenty tekstu. Jego użycie podobne jest jak dla tablic. Jako pierwszy argument przyjmuje indeks początkowy, a za drugi indeks końcowy.
+
+```js
+const introduction = 'Cześć! nazywam się Kamil';
+
+const name = introduction.slice(-5);
+
+// Kamil
+console.log(name);
+
+const greeting = introduction.slice(0, 6);
+
+// Cześć!
+console.log(greeting);
+```
+
+## Split
+
+Split dzieli stringa na mniejsze części, które trafiają do tablicy. Jako argument przyjmuje separator, wobec którego ma dzielić. Może być to dla przykładu spacja, przecinek lub jakiś dłuższy fragment tekst.
+
+```js
+const sentence = 'Kto pyta nie błądzi';
+
+// Jest dzielone co każdą spację
+const splitted = sentence.split(' ');
+
+// ["Kto", "pyta", "nie", "błądzi"] 
+console.log(splitted);
+```
+
+Jako ciekawostka, [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) dla stringa, działa taka samo jak split wywołany z pustym stringiem.
+
+```js
+const sentence = 'Halooo!';
+
+// [...sentence] -> sentence.split('')
+const splitted = [...sentence]; 
+
+// ['H', 'a', 'l', 'o', 'o', 'o', '!']
+console.log(sentence)
+```
+
+## Podsumowanie
+
+Mimo dużego podobieństwa w nazwie da się te wszystkie metody rozróżnić. `Slice` można używać zarówno dla stringów jak i tablic, a `split` i `splice` tylko i wyłącznie dla tablic. Na pewno dużą rolę w trakcie ich wykorzystywania odgrywa nasz edytor tekstu, gdy podpowiada argumenty jakie metoda może przyjąć. Mam nadzieję, że następnym razem gdy przyjdzie okazja ich użycia już nie będe musiał sięgać do dokumentacji. Chociaż wiadomo jak to bywa w życiu - _pamięć jest dobra, ale krótka_ 🤷‍♂️
