@@ -25,3 +25,5 @@ export interface ArticleMdx {
   meta: ArticleMeta;
   source: MDXRemoteSerializeResult;
 }
+
+export type Locale = 'en' | 'pl';

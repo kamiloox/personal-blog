@@ -1,8 +1,9 @@
 import { ThemeProvider } from 'next-themes';
-import type { AppProps } from 'next/app';
 import { DefaultSeo } from 'next-seo';
-import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
+import type { AppProps } from 'next/app';
+import { IntlProvider } from '../locales/IntlContext';
 import { SEO } from '../next-seo.config';
+import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
 import '../styles/global.scss';
 import '../styles/prismTheme.scss';
 
@@ -10,8 +11,10 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <DefaultSeo {...SEO} />
-        <Component {...pageProps} />
+        <IntlProvider>
+          <DefaultSeo {...SEO} />
+          <Component {...pageProps} />
+        </IntlProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
