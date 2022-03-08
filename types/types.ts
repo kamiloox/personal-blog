@@ -17,6 +17,7 @@ export interface ArticleMeta {
   excerpt: string;
   date: string;
   slug: string;
+  locale: string;
   published: boolean;
   category: Category;
 }

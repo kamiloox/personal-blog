@@ -1,15 +1,15 @@
-import enHome from './en/home.json';
-import plHome from './pl/home.json';
+import commenPl from './pl/common.json';
+import commonEn from './en/common.json';
 import type { Locale } from '../types/types';
 
 const polishTranslations = {
-  home: plHome,
+  common: commenPl,
 };
 
 type Translation = typeof polishTranslations;
 
 const englishTranslations: Translation = {
-  home: enHome,
+  common: commonEn,
 };
 
 export const translations = {

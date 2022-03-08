@@ -4,30 +4,33 @@ import { Snippets } from '../components/snippets/Snippets';
 import { getSnippetsSortedByLatest } from '../lib/articles';
 import { useIntl } from '../locales/IntlContext';
 import { ArticleMeta } from '../types/types';
+import { isLocale } from '../utils/helpers';
 
 interface HomeProps {
   snippets: ArticleMeta[];
 }
 
 const HomePage: NextPage<HomeProps> = ({ snippets }) => {
-  const { t, toggleLanguage } = useIntl('home');
-
-  console.log(t('hello'));
+  const { t, toggleLanguage } = useIntl('common');
 
   return (
-    <Layout
-      title="frontend blog"
-      description="Frontendowy blog głównie o tematyce Typescript i ReactJS"
-      isHome
-    >
+    <Layout title={t('title')} description={t('description')} isHome>
       <button onClick={toggleLanguage}>toggle language</button>
       <Snippets snippets={snippets} />
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const snippets = await getSnippetsSortedByLatest();
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  console.log(locale);
+
+  if (!isLocale(locale)) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const snippets = await getSnippetsSortedByLatest(locale);
 
   return {
     props: { snippets },

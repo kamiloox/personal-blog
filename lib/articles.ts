@@ -1,61 +1,64 @@
-import { getMdxSource } from './mdx';
+import { getMdxSourceAllLocales } from './mdx';
+import { ARTICLES_DIR, IS_PRODUCTION } from '../utils/constants';
+import type { ArticleMdx, Locale } from '../types/types';
 import fs from 'node:fs/promises';
-import path from 'path';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-const ARTICLES_DIR = path.join(process.cwd(), 'articles');
-
-const getArticlePath = (name: string) => {
-  return path.join(process.cwd(), 'articles', name);
-};
-
-export const getAllArticles = async () => {
-  try {
-    const filePaths = await fs.readdir(ARTICLES_DIR);
-
-    const articles = await Promise.all(
-      filePaths.map((filePath) => {
-        return getMdxSource(getArticlePath(filePath));
-      }),
-    );
-
-    if (isProduction) {
-      return articles.filter(({ meta }) => meta.published);
-    }
-
-    return articles;
-  } catch (err) {
-    console.error('Cannot get all articles', err);
-    return [];
-  }
-};
-
-export const getArticlesSlugs = async () => {
-  const articles = await getAllArticles();
-
-  return articles.map(({ meta: { slug } }) => slug);
-};
-
-export const getArticle = async (slug: string) => {
-  const slugs = await getArticlesSlugs();
-
-  if (!slugs.includes(slug)) {
-    return null;
-  }
-
-  const fileName = `${slug}.mdx`;
-  const article = await getMdxSource(getArticlePath(fileName));
-
-  if (isProduction && !article.meta.published) {
+const getArticleForCurrentEnvironment = (article: ArticleMdx | null) => {
+  if (IS_PRODUCTION && !article?.meta.published) {
     return null;
   }
 
   return article;
 };
 
-export const getSnippetsSortedByLatest = async () => {
+export const getAllArticles = async (locale?: Locale) => {
+  try {
+    const articlesDirs = await fs.readdir(ARTICLES_DIR);
+
+    const articles = await Promise.all(
+      articlesDirs.map((slug) => {
+        return getMdxSourceAllLocales(slug);
+      }),
+    );
+
+    const articlesForCurrentEnvironment = articles
+      .flat()
+      .map((article) => {
+        return getArticleForCurrentEnvironment(article);
+      })
+      .filter((article): article is ArticleMdx => !!article);
+
+    if (locale) {
+      return articlesForCurrentEnvironment.filter(({ meta }) => {
+        return meta.locale.includes(locale);
+      });
+    }
+
+    return articlesForCurrentEnvironment;
+  } catch (err) {
+    console.error('Cannot get all articles', err);
+    return [];
+  }
+};
+
+export const getArticlesPaths = async () => {
   const articles = await getAllArticles();
+
+  const paths = articles.map(({ meta }) => ({ params: { slug: meta.slug }, locale: meta.locale }));
+
+  return paths;
+};
+
+export const getArticle = async (slug: string, locale: Locale) => {
+  const articles = await getAllArticles(locale);
+
+  const article = articles.find(({ meta }) => meta.slug.includes(slug));
+
+  return article;
+};
+
+export const getSnippetsSortedByLatest = async (locale: Locale) => {
+  const articles = await getAllArticles(locale);
 
   return articles
     .sort((a, b) => {
