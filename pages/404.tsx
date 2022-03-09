@@ -1,13 +1,13 @@
-import { NextPage } from 'next';
 import { Layout } from '../components/layout/Layout';
 import { Error } from '../components/shared/components/error/Error';
+import { useIntl } from '../locales/IntlContext';
 
-const Page404: NextPage = () => {
-  const message = 'Ups, nie ma takiej strony o szukanym adresie. 😕';
+const Page404 = () => {
+  const { t } = useIntl('error');
 
   return (
-    <Layout title="Nie znaleziono" description={message}>
-      <Error message={message} />
+    <Layout title={t('title404')} description={t('message404')}>
+      <Error message={t('message404')} />
     </Layout>
   );
 };

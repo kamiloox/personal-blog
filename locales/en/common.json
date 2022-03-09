@@ -1,6 +1,10 @@
 {
   "title": "frontend blog",
   "description": "Frontend blog mainly focused on Typescript and ReactJS.",
-  "header.desc-1": "frontend developer based in Poland 👀",
-  "header.desc-2": "mostly passionated with"
+  "headerDesc1": "frontend developer based in Poland 👀",
+  "headerDesc2": "mostly passionated with",
+  "linkHome": "home",
+  "linkAbout": "about me",
+  "changeThemeTo": "Change theme to",
+  "goToHome": "Go to home page"
 }

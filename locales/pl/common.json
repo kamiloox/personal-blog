@@ -1,6 +1,10 @@
 {
   "title": "frontend blog",
   "description": "Frontendowy blog głównie o tematyce Typescript i ReactJS",
-  "header.desc-1": "blog o tematyce frontendowej 👀",
-  "header.desc-2": "moje ulubione technologie to"
+  "headerDesc1": "blog o tematyce frontendowej 👀",
+  "headerDesc2": "moje ulubione technologie to",
+  "linkHome": "strona główna",
+  "linkAbout": "o mnie",
+  "changeThemeTo": "Przełącz motyw na",
+  "goToHome": "Idź do strony głównej"
 }

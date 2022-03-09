@@ -3,7 +3,7 @@ import { DefaultSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import { IntlProvider } from '../locales/IntlContext';
 import { SEO } from '../next-seo.config';
-import ErrorBoundary from '../components/errorBoundary/ErrorBoundary';
+import { ErrorBoundary } from '../components/errorBoundary/ErrorBoundary';
 import '../styles/global.scss';
 import '../styles/prismTheme.scss';
 

@@ -8,12 +8,15 @@ import { useMediaQuery } from '../shared/hooks/useMediaQuery';
 import { menuVariantsDesktop, menuVariantsTablet, backdropVariants } from './utils/motionVariants';
 import { Breakpoint } from '../../types/types';
 import { routes } from '../../utils/routes';
+import { useIntl } from '../../locales/IntlContext';
 import styles from './Menu.module.scss';
 
 export const Menu = () => {
   const [isVisibleOnTablet, setIsVisibleOnTablet] = useState(false);
   const { matches: isTablet, isLoading } = useMediaQuery(Breakpoint.Tablet);
   const navWrapperRef = useRef<HTMLElement>(null);
+
+  const { t } = useIntl('common');
 
   const handleToggleOnMobile = () => {
     setIsVisibleOnTablet(!isVisibleOnTablet);
@@ -62,7 +65,7 @@ export const Menu = () => {
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
                 >
-                  strona główna
+                  {t('linkHome')}
                 </a>
               </Link>
             </li>
@@ -73,7 +76,7 @@ export const Menu = () => {
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
                 >
-                  o mnie
+                  {t('linkAbout')}
                 </a>
               </Link>
             </li>

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { createContext, ReactNode, useCallback, useContext, useMemo } from 'react';
-import { Namespace, getTranslation } from './translations';
+import { FirstLevelDepthKey, getTranslation, Namespace, Translation } from './translations';
 import { isLocale, setNonExpiredCookie } from '../utils/helpers';
 import type { Locale } from '../types/types';
 
@@ -8,7 +8,9 @@ interface IntlContextValues {
   locale: Locale;
   locales: string[];
   toggleLanguage: () => void;
-  t: (namespace: Namespace) => ReturnType<typeof getTranslation>;
+  t: <N extends Namespace>(
+    namespace: N,
+  ) => (key: FirstLevelDepthKey<N>) => Translation[N][typeof key];
 }
 
 const IntlContext = createContext<IntlContextValues | undefined>(undefined);
@@ -26,14 +28,14 @@ export const IntlProvider = ({ children }: IntlProviderProps) => {
   const toggleLanguage = useCallback(() => {
     const newLocale: Locale = locale === 'en' ? 'pl' : 'en';
 
-    router.replace(router.route, router.route, { locale: newLocale });
+    router.replace(router.asPath, router.asPath, { locale: newLocale });
 
     setNonExpiredCookie('NEXT_LOCALE', newLocale);
   }, [locale, router]);
 
   const t = useCallback(
-    (namespace: Namespace) => {
-      return getTranslation(locale, namespace);
+    <N extends Namespace>(namespace: N) => {
+      return getTranslation<N>(locale, namespace);
     },
     [locale],
   );
@@ -46,7 +48,7 @@ export const IntlProvider = ({ children }: IntlProviderProps) => {
   return <IntlContext.Provider value={value}>{children}</IntlContext.Provider>;
 };
 
-export const useIntl = (namespace: Namespace) => {
+export const useIntl = <N extends Namespace>(namespace: N) => {
   const context = useContext(IntlContext);
   if (!context) {
     throw new Error('useIntl must be used within IntlProvider!');

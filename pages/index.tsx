@@ -1,29 +1,25 @@
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticProps } from 'next';
+
 import { Layout } from '../components/layout/Layout';
 import { Snippets } from '../components/snippets/Snippets';
 import { getSnippetsSortedByLatest } from '../lib/articles';
-import { useIntl } from '../locales/IntlContext';
+import { getTranslation } from '../locales/translations';
 import { ArticleMeta } from '../types/types';
 import { isLocale } from '../utils/helpers';
 
 interface HomeProps {
   snippets: ArticleMeta[];
+  title: string;
+  description: string;
 }
 
-const HomePage: NextPage<HomeProps> = ({ snippets }) => {
-  const { t, toggleLanguage } = useIntl('common');
-
-  return (
-    <Layout title={t('title')} description={t('description')} isHome>
-      <button onClick={toggleLanguage}>toggle language</button>
-      <Snippets snippets={snippets} />
-    </Layout>
-  );
-};
+const HomePage = ({ snippets, title, description }: HomeProps) => (
+  <Layout title={title} description={description} isHome>
+    <Snippets snippets={snippets} />
+  </Layout>
+);
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  console.log(locale);
-
   if (!isLocale(locale)) {
     return {
       notFound: true,
@@ -32,8 +28,12 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
 
   const snippets = await getSnippetsSortedByLatest(locale);
 
+  const t = getTranslation(locale, 'common');
+
+  const [title, description] = [t('title'), t('description')];
+
   return {
-    props: { snippets },
+    props: { snippets, title, description },
   };
 };
 

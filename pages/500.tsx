@@ -1,13 +1,13 @@
-import { NextPage } from 'next';
 import { Layout } from '../components/layout/Layout';
 import { Error } from '../components/shared/components/error/Error';
+import { useIntl } from '../locales/IntlContext';
 
-const Page500: NextPage = () => {
-  const message = 'Przepraszam, coś poszło nie tak. Strona nie działa, spróbuj ponownie poźniej 😕';
+const Page500 = () => {
+  const { t } = useIntl('error');
 
   return (
-    <Layout title="Nie znaleziono" description={message}>
-      <Error message={message} />
+    <Layout title={t('title500')} description={t('message500')}>
+      <Error message={t('message500')} />
     </Layout>
   );
 };

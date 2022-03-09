@@ -27,9 +27,9 @@ export const Header = ({ isHome = false }: HeaderProps) => {
       <Menu />
       {isHome && (
         <p className={styles.description}>
-          <span>{t('header.desc-1')}</span>
+          <span>{t('headerDesc1')}</span>
           <span>
-            {t('header.desc-2')} <HighlightedText variant="secondary">ReactJS</HighlightedText>
+            {t('headerDesc2')} <HighlightedText variant="secondary">ReactJS</HighlightedText>
             {locale === 'en' ? ' and ' : ' oraz '}
             <HighlightedText variant="secondary">TypeScript</HighlightedText>
           </span>
