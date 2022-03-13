@@ -10,10 +10,10 @@ Praca z Typescriptem jest bardzo przyjemna. Sam w sobie dużo rzeczy ułatwia i 
 
 ## Typ void
 
-Typ `void` moźe może przyjąć wartość `null` lub `undefined`. Typescript wykorzystuje `void` jako typ zwracany przez funkcję. Być może zapytasz: _"ale jak to funkcja która nie ma słowa kluczowego `return` coś zwraca?"_. Tak, sama funkcja która z domysłu nic nie powinna zwracać, zwraca właśnie typ `void`. Jest to związane nie tyle co z Typescriptem, ale z samym Javascriptem, który, w wypadku gdy nie ma żadnego słowa kluczowego `return`, zwraca właśnie `undefined`.
+Typ `void` moźe przyjąć wartość `null` lub `undefined`. Typescript wykorzystuje `void` jako typ zwracany przez funkcję. Być może zapytasz: _"ale jak to funkcja która nie ma słowa kluczowego `return` coś zwraca?"_. Tak, sama funkcja która z domysłu nic nie powinna zwracać, zwraca właśnie typ `void`. Jest to związane nie tyle co z Typescriptem, ale z samym Javascriptem, który, w wypadku gdy nie ma żadnego słowa kluczowego `return`, zwraca właśnie `undefined`.
 
 ```ts
-const undefinedValue: void = null;
+const undefinedValue: void = undefined;
 const nullValue: void = null;
 
 const voidFunction = () => { // () => void 
