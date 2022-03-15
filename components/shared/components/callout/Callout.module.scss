@@ -7,7 +7,7 @@
   padding-right: 40px;
   border-radius: 5px;
 
-  & > p {
+  & p {
     margin: 0;
     font-size: var(--text-lg);
   }
@@ -16,6 +16,11 @@
     padding: 20px 10px;
     padding-right: 20px;
   }
+}
+
+.textWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .icon {

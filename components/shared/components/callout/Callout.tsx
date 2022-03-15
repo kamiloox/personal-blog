@@ -9,6 +9,8 @@ interface CalloutProps {
 export const Callout = ({ children }: CalloutProps) => (
   <div className={styles.wrapper}>
     <div className={styles.icon}>💡</div>
-    <Typography>{children}</Typography>
+    <div className={styles.textWrapper}>
+      <Typography>{children}</Typography>
+    </div>
   </div>
 );

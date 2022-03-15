@@ -1,11 +1,12 @@
 @use '../shared/styles/breakpoints' as *;
+@use '../shared/styles/mixins.scss' as *;
 
 .article {
-  margin: 50px 0;
+  margin: 45px 0;
   padding-top: 20px;
 
   @include bpTablet {
-    margin: 40px 0;
+    margin: 35px 0;
   }
 
   @include bpMobile {
@@ -35,4 +36,16 @@
 
 .header {
   margin-bottom: 20px;
+}
+
+.textButton {
+  @include hoverable;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  color: #3376b9;
+  font-weight: var(--font-semibold);
 }

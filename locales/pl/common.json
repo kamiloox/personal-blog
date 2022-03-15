@@ -6,5 +6,7 @@
   "linkHome": "strona główna",
   "linkAbout": "o mnie",
   "changeThemeTo": "Przełącz motyw na",
-  "goToHome": "Idź do strony głównej"
+  "goToHome": "Idź do strony głównej",
+  "articleToggleLangNote": "Ten artykuł jest też dostępny w języku angielskim. Jeżeli chcesz to",
+  "articleToggleLangButton": "przełącz język."
 }

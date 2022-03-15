@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Hamburger } from '../hamburger/Hamburger';
@@ -15,6 +16,7 @@ export const Menu = () => {
   const [isVisibleOnTablet, setIsVisibleOnTablet] = useState(false);
   const { matches: isTablet, isLoading } = useMediaQuery(Breakpoint.Tablet);
   const navWrapperRef = useRef<HTMLElement>(null);
+  const { asPath } = useRouter();
 
   const { t } = useIntl('common');
 
@@ -57,6 +59,30 @@ export const Menu = () => {
           <Socials />
         </div>
         <nav ref={navWrapperRef}>
+          <ul className={styles.localesList}>
+            <li className={styles.listItem}>
+              <Link href={asPath} locale="en">
+                <a
+                  className={styles.link}
+                  onClick={closeMenu}
+                  onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
+                >
+                  en
+                </a>
+              </Link>
+            </li>
+            <li className={styles.listItem}>
+              <Link href={asPath} locale="pl">
+                <a
+                  className={styles.link}
+                  onClick={closeMenu}
+                  onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
+                >
+                  pl
+                </a>
+              </Link>
+            </li>
+          </ul>
           <ul className={styles.list}>
             <li className={styles.listItem}>
               <Link href={routes.home}>

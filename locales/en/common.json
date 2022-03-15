@@ -6,5 +6,7 @@
   "linkHome": "home",
   "linkAbout": "about me",
   "changeThemeTo": "Change theme to",
-  "goToHome": "Go to home page"
+  "goToHome": "Go to home page",
+  "articleToggleLangNote": "This article is available in Polish too. If you'd like then",
+  "articleToggleLangButton": "toggle the language."
 }

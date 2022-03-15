@@ -6,6 +6,18 @@
   flex-direction: column;
   align-items: flex-end;
   list-style: none;
+  margin: 0;
+  padding: 0;
+
+  @include bpTablet {
+    align-items: center;
+  }
+}
+
+.localesList {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
   margin: 5px 0 0;
   padding: 0;
 
