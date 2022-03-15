@@ -30,7 +30,7 @@
   margin-bottom: 5px;
 }
 
-.link {
+@mixin listButton {
   display: block;
   font-weight: var(--font-bold);
   font-size: var(--text-lg);
@@ -39,6 +39,17 @@
   padding: 5px;
 
   @include hoverable;
+}
+
+.link {
+  @include listButton;
+}
+
+.button {
+  @include listButton;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
 }
 
 .toggleWithSocials {

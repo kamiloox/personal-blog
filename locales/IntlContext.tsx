@@ -8,6 +8,7 @@ interface IntlContextValues {
   locale: Locale;
   locales: string[];
   toggleLanguage: () => void;
+  setLanguage: (newLocale: Locale) => void;
   t: <N extends Namespace>(
     namespace: N,
   ) => (key: FirstLevelDepthKey<N>) => Translation[N][typeof key];
@@ -25,13 +26,25 @@ export const IntlProvider = ({ children }: IntlProviderProps) => {
 
   const locale: Locale = isLocale(router.locale) ? router.locale : (defaultLocale as Locale);
 
+  const setLocaleAndRedirect = useCallback(
+    (newLocale: Locale) => {
+      router.replace(router.asPath, router.asPath, { locale: newLocale });
+
+      setNonExpiredCookie('NEXT_LOCALE', newLocale);
+    },
+    [router],
+  );
+
+  const setLanguage = useCallback(
+    (newLocale: Locale) => setLocaleAndRedirect(newLocale),
+    [setLocaleAndRedirect],
+  );
+
   const toggleLanguage = useCallback(() => {
     const newLocale: Locale = locale === 'en' ? 'pl' : 'en';
 
-    router.replace(router.asPath, router.asPath, { locale: newLocale });
-
-    setNonExpiredCookie('NEXT_LOCALE', newLocale);
-  }, [locale, router]);
+    setLocaleAndRedirect(newLocale);
+  }, [setLocaleAndRedirect, locale]);
 
   const t = useCallback(
     <N extends Namespace>(namespace: N) => {
@@ -41,8 +54,8 @@ export const IntlProvider = ({ children }: IntlProviderProps) => {
   );
 
   const value = useMemo(
-    () => ({ locale, locales: locales || [], toggleLanguage, t }),
-    [locale, locales, toggleLanguage, t],
+    () => ({ locale, locales: locales || [], setLanguage, toggleLanguage, t }),
+    [locale, locales, toggleLanguage, setLanguage, t],
   );
 
   return <IntlContext.Provider value={value}>{children}</IntlContext.Provider>;
