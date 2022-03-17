@@ -9,12 +9,12 @@ export const Socials = () => (
       <a href={externalRoutes.github} target="_blank" rel="noreferrer">
         <TiSocialGithub
           size={36}
-          title="Profil Github"
+          title="Github"
           className={`${styles.icon} ${styles.githubIcon}`}
         />
       </a>
       <a href={externalRoutes.linkedin} target="_blank" rel="noreferrer">
-        <TiSocialLinkedin size={36} title="Profil Linkedin" className={styles.icon} />
+        <TiSocialLinkedin size={36} title="Linkedin" className={styles.icon} />
       </a>
     </div>
   </section>

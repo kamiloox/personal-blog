@@ -1,9 +1,11 @@
 import { useTheme } from 'next-themes';
 import { FiSun, FiMoon } from 'react-icons/fi';
+import { useIntl } from '../../locales/IntlContext';
 import styles from './ThemeToggle.module.scss';
 
 export const ThemeToggle = () => {
   const { theme: selectedTheme, setTheme, systemTheme } = useTheme();
+  const { t } = useIntl('common');
 
   const isSystemThemeDark = systemTheme === 'dark' && selectedTheme === 'system';
   const isDark = selectedTheme === 'dark' || isSystemThemeDark;
@@ -24,7 +26,9 @@ export const ThemeToggle = () => {
       <label htmlFor="theme-toggle" className={styles.toggle}>
         <FiMoon size={24} />
         <FiSun size={24} />
-        <span className={styles.labelText}>Przełącz motyw na {isDark ? 'jasny' : 'ciemny'}</span>
+        <span className={styles.labelText}>
+          {t('changeThemeTo')} {isDark ? 'jasny' : 'ciemny'}
+        </span>
         <span className={styles.indicator} />
       </label>
     </div>

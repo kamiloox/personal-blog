@@ -8,16 +8,17 @@ import fs from 'node:fs/promises';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import rehypePrism from '@mapbox/rehype-prism';
+import { ARTICLES_DIR } from '../utils/constants';
 
 export const getMdxSource = async (filePath: string) => {
   try {
     const file = await fs.readFile(filePath, 'utf-8');
 
-    const slug = path.basename(filePath).replace('.mdx', '');
+    const [slug, locale] = path.basename(filePath).split('.');
 
     const { content, data } = matter(file);
     const mdxSource = await serialize(content, {
-      scope: { ...data, slug },
+      scope: { ...data, locale, slug },
       mdxOptions: { rehypePlugins: [rehypePrism] },
     });
 
@@ -27,4 +28,16 @@ export const getMdxSource = async (filePath: string) => {
   } catch (err) {
     throw new Error(`Cannot get mdx source\n ${err instanceof Error ? err.message : err}`);
   }
+};
+
+export const getMdxSourceAllLocales = async (slug: string) => {
+  const articlesFilenames = await fs.readdir(path.join(ARTICLES_DIR, slug));
+
+  const articles = await Promise.all(
+    articlesFilenames.map((filename) => {
+      return getMdxSource(path.join(ARTICLES_DIR, slug, filename));
+    }),
+  );
+
+  return articles;
 };

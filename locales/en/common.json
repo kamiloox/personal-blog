@@ -1,0 +1,12 @@
+{
+  "title": "frontend blog",
+  "description": "Frontend blog mainly focused on Typescript and ReactJS.",
+  "headerDesc1": "frontend developer based in Poland 👀",
+  "headerDesc2": "mostly passionated with",
+  "linkHome": "home",
+  "linkAbout": "about me",
+  "changeThemeTo": "Change theme to",
+  "goToHome": "Go to home page",
+  "articleToggleLangNote": "This article is available in Polish too. If you'd like then",
+  "articleToggleLangButton": "toggle the language."
+}

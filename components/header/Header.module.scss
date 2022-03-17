@@ -23,6 +23,7 @@
 }
 
 .link {
+  align-self: center;
   justify-self: start;
   padding-right: 30px;
   text-decoration: none;
@@ -33,7 +34,7 @@
   @include breakInnerSpans;
   font-size: var(--text-2xl);
   letter-spacing: 0.5px;
-  margin-top: 50px;
+  margin-top: 40px;
   line-height: 1.5;
   grid-column: span 2;
 

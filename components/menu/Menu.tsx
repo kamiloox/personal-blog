@@ -8,12 +8,15 @@ import { useMediaQuery } from '../shared/hooks/useMediaQuery';
 import { menuVariantsDesktop, menuVariantsTablet, backdropVariants } from './utils/motionVariants';
 import { Breakpoint } from '../../types/types';
 import { routes } from '../../utils/routes';
+import { useIntl } from '../../locales/IntlContext';
 import styles from './Menu.module.scss';
 
 export const Menu = () => {
   const [isVisibleOnTablet, setIsVisibleOnTablet] = useState(false);
   const { matches: isTablet, isLoading } = useMediaQuery(Breakpoint.Tablet);
   const navWrapperRef = useRef<HTMLElement>(null);
+
+  const { t, setLanguage } = useIntl('common');
 
   const handleToggleOnMobile = () => {
     setIsVisibleOnTablet(!isVisibleOnTablet);
@@ -54,6 +57,18 @@ export const Menu = () => {
           <Socials />
         </div>
         <nav ref={navWrapperRef}>
+          <ul className={styles.localesList}>
+            <li className={styles.listItem}>
+              <button className={styles.button} onClick={() => setLanguage('en')}>
+                en
+              </button>
+            </li>
+            <li className={styles.listItem}>
+              <button className={styles.button} onClick={() => setLanguage('pl')}>
+                pl
+              </button>
+            </li>
+          </ul>
           <ul className={styles.list}>
             <li className={styles.listItem}>
               <Link href={routes.home}>
@@ -62,7 +77,7 @@ export const Menu = () => {
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
                 >
-                  strona główna
+                  {t('linkHome')}
                 </a>
               </Link>
             </li>
@@ -73,7 +88,7 @@ export const Menu = () => {
                   onClick={closeMenu}
                   onKeyDown={(e) => e.key === 'Enter' && closeMenu()}
                 >
-                  o mnie
+                  {t('linkAbout')}
                 </a>
               </Link>
             </li>

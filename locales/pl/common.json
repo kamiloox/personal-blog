@@ -1,0 +1,12 @@
+{
+  "title": "frontend blog",
+  "description": "Frontendowy blog głównie o tematyce Typescript i ReactJS",
+  "headerDesc1": "blog o tematyce frontendowej 👀",
+  "headerDesc2": "moje ulubione technologie to",
+  "linkHome": "strona główna",
+  "linkAbout": "o mnie",
+  "changeThemeTo": "Przełącz motyw na",
+  "goToHome": "Idź do strony głównej",
+  "articleToggleLangNote": "Ten artykuł jest też dostępny w języku angielskim. Jeżeli chcesz to",
+  "articleToggleLangButton": "przełącz język."
+}

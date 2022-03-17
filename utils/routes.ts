@@ -5,6 +5,6 @@ export const externalRoutes = {
 
 export const routes = {
   home: '/',
-  about: '/o-mnie',
-  articles: '/artykuly',
+  about: '/about',
+  articles: '/articles',
 } as const;

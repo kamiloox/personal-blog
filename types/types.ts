@@ -17,6 +17,7 @@ export interface ArticleMeta {
   excerpt: string;
   date: string;
   slug: string;
+  locale: string;
   published: boolean;
   category: Category;
 }
@@ -25,3 +26,5 @@ export interface ArticleMdx {
   meta: ArticleMeta;
   source: MDXRemoteSerializeResult;
 }
+
+export type Locale = 'en' | 'pl';

@@ -1,0 +1,124 @@
+---
+title: Types that are hard to understand in Typescript
+date: 02-12-2022
+category: typescript
+published: true
+excerpt: Void, never, any, and unknown. All of them have different usage, but do we know when we should use one of them? Usually yes, but we must be conscious of their differences, usage, and existence.
+
+---
+
+Typically coding in Typescript is very pleasant. It makes coding easier cause of static typing, and it catches vulnerable operations. Typescript reaches out its hand to us and helps eagerly. Even annotates what type is a function returning. However, it's in our interest to write a code that is not vulnerable to potential threats. That is why it's so important to correctly type our arguments and functions, but it is not as always easy as we may think. Despite this, I am writing this article to summarize my knowledge. Maybe this article could help you to know better types that are hard to understand in Typescript 👀
+
+## Type never
+
+To `void` type, we can assign only values `null` or `undefined`. Typescript uses `void` as a function return type by default. Maybe you are thinking _"how the function which doesn't have a keyword `return` can return something?"_. Yes, a function which not return any value returns void. It's not associated with Typescript, but with Javascript. When we declare a function without `return` as a result we have `undefined`.
+
+```ts
+const undefinedValue: void = undefined;
+const nullValue: void = null;
+
+const voidFunction = () => { // () => void 
+  console.log('I am not returning anything 🙄');
+};
+```
+
+<Callout>Assignment attempt may fail if flag strictNullCHeck is disabled in tsconfig.json. I encourage you to leave this flag enabled because it prevents us from assigning values null and undefined, where it cannot be done. Even Typescript better suggests types. But for this example, I disabled this flag.</Callout>
+
+## Type never
+
+Type never is a bit misleading. It's a type that doesn't exist. To type `never` we can only assign `never` itself. Is this type even useful, if it cannot hold any Javascript value? Usually, we are not assigning any value to it. But it may look a little different if we are building a library. I will tell you more about this later. But in general, Typescript infers and knows when type `never` will occur. It will be easier to show this on example 
+
+```ts
+const functionWithNeverBlock = (value: number) => {
+  if (typeof value === 'string') {
+    const neverValue = value; // never
+  }
+  const numberValue = value; // number
+}
+```
+
+This example looks really weird. We know that our argument is a number. But for this kind of situations, the type `never` is used. Even if we can technically check if a number is a string, we know that in this block of code this value __is nothing__. The code in this scope won't execute. That's not all, other functions that return never are the functions that have an infinite loop or throw only an error. 
+
+```ts
+const throwError = () => { // () => never
+  throw new Error('I am only throwing an error ;/');
+}
+
+const inifiniteLoop = () => { // () => never
+  while (true) {
+    console.log('Never say never 😜');
+  }
+}
+```
+
+All of the previous examples got types never because Typescript inferred them. But is there a situation when we can use type `never` by ourselves? This type is used very often in conditional types. You may have never heard about it, but it's very similar to `ternary operator` in Javascript.
+
+```ts
+type StringOrNumber<T> = T extends string ? string : number;
+type StringType = StringOrNumber<''> // string
+```
+
+The above example shows the practical usage of a conditional type. First of all, it checks if our type is a string or number. But more proficient readers may see that this code has one flaw. It will work great if we pass as a type value or number. However, it may look different if we pass any other type. For example, what will happen if we use `boolean`?
+
+
+```ts
+type ShouldBeNeverType = StringOrNumber<boolean> // number
+```
+
+As we can see, our type is now number. It's incorrect behavior! It'd rather have never value. How can we achieve this?
+
+```ts
+type StringOrNumber<T> = T extends string ? string : T extends number ? number : never;
+type ShouldBeNeverType = StringOrNumber<boolean> // never
+```
+
+As you can see, we can do it in this way. It first checks if our value is a number or string. Otherwise, it's set to type never.
+
+## Type any
+
+It's the most known type for all of the Typescript users. To this type, we can assign every value that is correct for Javascript. So we must be aware of its usage. Such freedom isn't good. We should use `any` with consciousness and as a last resort. Often we use `any` when we are rewriting our code from Javascript to Typescript. But with development, these types are changed to more specific ones.
+
+```ts
+let anyValue: any = 7312;
+anyValue = 'I can be a string';
+anyValue = { or: 'I can be an object' };
+anyValue = ['even', 'array'];
+```
+
+It's very dangerous that what is happening above. Typescript won't show us an error when we want to take a value from an object, which might not even be an object. When we use `any` we are saying to Typescript: _"Okay listen, don't be afraid, I set this to any, and I know what I'm doing"_. So we must omit this type as much as we can. But what when we don't really know what `type` will have our value?
+
+## Type unknown
+
+Like in type `any`, to `unknown` we can assign any value. However, we can't assign type `unknown` to any other type. It sounds very weird. Let's see this in practice: 
+
+
+```ts
+let unknownValue: unknown =  7312;
+unknownValue = 'I can be a string';
+unknownValue = { or: 'I can be an object' };
+unknownValue = ['even', 'array'];
+
+const errorUnknown: number = unknownValue; // Error
+const numberValue: number = typeof unknownValue === 'number' ? unknownValue : 0; // unknownValue || 0
+```
+
+As you can see, type `unknown` has the same values as we gave to type `any` before. However, when we want to assign a value that is of another type (here a number), we have an error. First, we need to check if our value is of the correct type at runtime. So `unknown` gives us safety and because of that, we can sleep better.
+
+Type `unknown` is very often used when we are catching errors in code block `catch`. We never have the confidence in what type is our error. It may be a string or an object, or even something else. If we don't want to guess, we need to type our error correctly and check possible cases.
+
+```ts
+const thisThrowsError = async () => {
+  try {
+    await likelyToBreak();
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return console.error(err.message);
+    }
+    console.error('Oops, something went wrong');
+  }
+}
+```
+
+## Summary
+
+I admit that knowledge about these types is not easy. We had a closer look at four types: `void`, `never`, `any`, and `unknown`. All of them have different usage, but do we know when we should use one of them? Usually yes, but we must be conscious of their differences, usage, and existence.

@@ -1,0 +1,6 @@
+{
+  "message404": "Ooops, the page at given address does not exist 😕",
+  "title404": "Not found",
+  "message500": "Sorry, something went wrong. The website is not working correctly. Try again later 😕",
+  "title500": "Something went wrong."
+}
