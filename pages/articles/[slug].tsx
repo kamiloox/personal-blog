@@ -3,15 +3,16 @@ import { Article } from '../../components/article/Article';
 import { Layout } from '../../components/layout/Layout';
 import { getArticle, getArticlesPaths } from '../../lib/articles';
 import { isLocale, parseParam } from '../../utils/helpers';
-import type { ArticleMdx } from '../../types/types';
+import type { ArticleMdx, Locale } from '../../types/types';
 
 interface ArticlePageProps {
   article: ArticleMdx;
+  locale: Locale;
 }
 
-const ArticlePage: NextPage<ArticlePageProps> = ({ article }) => {
+const ArticlePage: NextPage<ArticlePageProps> = ({ article, locale }) => {
   return (
-    <Layout title={article.meta.title} description={article.meta.excerpt}>
+    <Layout title={article.meta.title} description={article.meta.excerpt} locale={locale}>
       <Article {...article} />
     </Layout>
   );
@@ -35,7 +36,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   }
 
   return {
-    props: { article },
+    props: { article, locale },
   };
 };
 
