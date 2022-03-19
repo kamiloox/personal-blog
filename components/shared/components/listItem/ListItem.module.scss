@@ -1,0 +1,11 @@
+@use '../../../shared/styles/breakpoints' as *;
+
+.listItem {
+  font-family: var(--font-family);
+  font-size: var(--text-xl);
+  margin: 10px 0;
+
+  @include bpTablet {
+    font-size: var(--text-lg);
+  }
+}
