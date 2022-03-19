@@ -4,9 +4,11 @@
   font-size: var(--text-xl);
   letter-spacing: 0.5px;
   line-height: 180%;
+  padding: 15px 0;
 
   @include bpTablet {
     font-size: var(--text-lg);
+    padding: 5px 0;
     line-height: 170%;
   }
 }
