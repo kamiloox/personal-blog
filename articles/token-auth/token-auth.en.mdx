@@ -140,7 +140,7 @@ const authMiddleware = (req, res, next) => {
     jwt.verify(accessToken, getEnv('ACCESS_TOKEN_SECRET'));
     next();
   } catch {
-    res.status(403).json({ status: 403, message: 'Invalid token' });
+    res.status(401).json({ status: 401, message: 'Invalid token' });
   }
 };
 ```
