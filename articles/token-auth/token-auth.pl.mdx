@@ -3,7 +3,7 @@ title: Zapewne robisz to źle, czyli token na frontendzie 🙅‍♂️
 date: 03-19-2022
 category: javascript
 published: true
-excerpt: Przechoywanie tokena na frontendzie to jeden z najcięższych tematów do zrozumienia dla początkujących developerów. Bezpieczeństwo aplikacji webowych jest bardzo ważne, ponieważ nie możemy pozwolić komuś na kradzież tożsamości naszych użytkowników 🔐
+excerpt: Przechowywanie tokena na frontendzie to jeden z najcięższych tematów do zrozumienia dla początkujących developerów. Ale warto dobrze zrozumieć ten temat, ponieważ nie możemy pozwolić komuś na kradzież tożsamości naszych użytkowników 🔐
 ---
 
 Jeżeli od razu chcesz przejść do meritum, to artykuł zasadniczo omawia dwie metody:
@@ -16,15 +16,15 @@ Jeżeli od razu chcesz przejść do meritum, to artykuł zasadniczo omawia dwie 
 
 ## Wstęp
 
-Wiele aplikacji, które są w sieci, posiadają systemy rejestracji i logowania. Mimo, że taki scenariusz jest często używany, to jego zakodowanie już nie jest takie proste. Bezpieczeństwo aplikacji webowych jest bardzo ważne, ponieważ nie możemy pozwolić komuś na kradzież tożsamości naszych użytkowników. Trzeba to wszystko dobrze przemyślec ze strony backendowej, jak i frontendowej. Dlatego ten artykuł omawia, jak powinniśmy obchodzić się z tokenem 🤭
+Wiele aplikacji, które są w sieci, posiadają systemy rejestracji i przyznawania dostępu. Mimo, że taki scenariusz jest często używany, to jego zakodowanie już nie jest takie proste. Bezpieczeństwo aplikacji webowych jest bardzo ważne, ponieważ nie możemy pozwolić komuś na kradzież tożsamości naszych użytkowników. Trzeba to wszystko dobrze przemyślec ze strony backendowej, jak i frontendowej. Dlatego ten artykuł omawia, jak powinniśmy obchodzić się z tokenem 🤭
 
-## Scenariusz potwierdzania tożsamości i przyznania dostępu
+## Potwierdzanie tożsamości i przyznawanie dostępu
 
-Logowanie na wielu stronach działa podobnie. Użytkownik wchodząc na serwisy takie jak Facebook, Youtube, czy Github, musi potwierdzić swoją tożsamość - ten proces nazywa się _uwierzytelnianiem_. Następnie gdy użytkownik wykonuje zapytanie do chronionego zasobu, backend będzie musi sprawdzić czy może zwrócić żądany zasób, czyli serwer dokonuje _autoryzacji_. Do tego potrzebny jest token, który jest w pewnym sensie _dowodem osobistym_. Jak za pomocą dowodu możemy poznać kogoś dane, tak samo za pomocą tokena, możemy sprawdzić z kim mamy do czynienia. Jak jednak taki token jest wydawany?
+Użytkownik wchodząc na serwisy takie jak Facebook, Youtube, czy Github, musi potwierdzić swoją tożsamość. Backend _uwierzytelnia_ go, czyli sprawdza czy jest on rzeczywiście tą osobą za którą się podaje. Następnie gdy użytkownik wykonuje zapytanie do chronionego zasobu, serwer dokonuje autoryzacji, więc sprawdza czy ma on do niego odpowiednie prawa. Do tego potrzebny jest token, który jest w pewnym sensie _dowodem osobistym_. Jak za pomocą dowodu możemy poznać kogoś dane, tak samo za pomocą tokena, możemy sprawdzić z kim mamy do czynienia. Jak jednak taki token jest wydawany?
 
 <Image alt="Komunikacja aplikacji z serwerem. Użytkownik rejestruje się i loguje, a serwer zwraca mu token" src='/images/auth-flow.pl.jpg' layout="responsive" width="993" height="518" />
 
-Proces logowania i rejestracji na powyższym zdjęciu jest bardzo mocno uproszczony. Jednak jak możesz zauważyć, przy 5 punkcie jest napisane - _użytkownik jest zalogowany a jego token..._. No właśnie, co się dzieje w tym momencie z tokenem? Musimy mieć do niego dostęp, jeżeli chcemy wykonywać zapytania do serwera i poświadczyć, __że my to tak naprawdę my__, dlatego warto go zapisać w pamięci przeglądarki, żeby użytkownik za każdym razem gdy wchodzi na stronę, nie musiał ponownie potwierdzać tożsamości.
+Jak możesz zauważyć, przy 5 punkcie jest napisane - _użytkownik jest zalogowany a jego token..._ No właśnie, co się dzieje w tym momencie z tokenem? Musimy mieć do niego dostęp, jeżeli chcemy wykonywać zapytania do serwera i poświadczyć, __że my to tak naprawdę my__, dlatego warto go zapisać w pamięci przeglądarki, żeby użytkownik za każdym razem gdy wchodzi na stronę, nie musiał ponownie potwierdzać tożsamości.
 
 <h2 id="localStorage">Przechowywanie tokena w localStorage</h2>
 
@@ -32,7 +32,7 @@ Jak już szczęśliwie otrzymaliśmy token, to możemy go zapisać w obiekcie __
 
 ```js
 const signInUser = async (login, password) => {
-  const signInURL = 'http://website.com/auth/signin'
+  const signInURL = 'http://website.com/auth/signin';
   try {
     const response = await fetch(signInURL, {
       method: 'POST',
@@ -62,18 +62,18 @@ Jak widać, jeżeli strona jest słabo zabezpieczona, to można łatwo pobrać z
 
 <h2 id="cookie">Pzechowywanie tokena w ciasteczku</h2>
 
-[Ciasteczko](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie) (ang. _cookie_) również pozwala przechowywać informacje na stronie, ale różni się od _localStorage_ tym, że może zostać ustawione zarówno przez serwer backendowy, lub przez aplikacje frontendową. Jeżeli zdecydujemy się na ustawienie ciasteczka na frontendzie, to będzie tak samo jak wcześniej, że ktoś może je wykraść. Dlatego powinniśmy zapisywać ciasteczko z tokenem poprzez serwer. Być może zapytasz - _Co to zmieni jak ustawię ciasteczko przez backend? Przecież to dalej będzie zapisane w przeglądarce_. Tak, to prawda, ale możemy wtedy ustawić pewne flagi, które ograniczą dostęp do ciasteczka.
+[Ciasteczko](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie) (ang. _cookie_) również pozwala przechowywać informacje na stronie, ale różni się od _localStorage_ tym, że może zostać ustawione zarówno przez serwer backendowy, lub przez aplikacje frontendową. Jeżeli zdecydujemy się na ustawienie ciasteczka na frontendzie, to będzie tak samo jak wcześniej, że ktoś może je wykraść. Dlatego powinniśmy zapisywać ciasteczko z tokenem poprzez serwer. Być może zapytasz - _Co to zmieni jak ustawię ciasteczko przez backend? Przecież to dalej będzie zapisane w przeglądarce_. Tak, to prawda, ale możemy wtedy ustawić pewne flagi, które ograniczą do niego dostęp.
 
 <h3 id="httpOnly">Flaga httpOnly</h3>
 
-Włączona flaga _httpOnly_ zabezpiecza ciasteczko przed jego odczytaniem w aplikacji i jeżeli sprawdzimy zawartość _document.cookie_, to go tam nie będzie. Wprowadza to bardzo duży stopień bezpieczeństwa. Odciążamy też w ten sposób aplikację frontendową i nie musimy już martwić się o umieszczeniu w nagłówku tokena, ponieważ ciasteczko jest za każdym razem dodawane w zapytaniu.
+Włączona flaga _httpOnly_ zabezpiecza ciasteczko przed jego odczytaniem w aplikacji i jeżeli sprawdzimy zawartość _document.cookie_, to go tam nie będzie, co przekłada się na większe bezpieczeństwo. Odciążamy też w ten sposób aplikację frontendową i nie musimy już martwić się o umieszczeniu w nagłówku tokena, ponieważ ciasteczko jest za każdym razem dodawane w zapytaniu.
 
 W przykładzie załóżmy, że frontend i backend są pod tym samym adresem. Wykonujemy zapytanie na frontendzie za pomocą funkcją _fetch_, która jest wbudowana w przeglądarce, jednak żeby nasz token został dołączony musimy dodać jedną rzecz.
 
 ```js
 fetch(signInURL, {
   method: 'POST',
-  credentials: 'include', // Trzeba to ustawić!
+  credentials: 'same-origin', // Trzeba to ustawić!
   headers: {
     'Content-Type': 'application/json',
   },
@@ -81,16 +81,16 @@ fetch(signInURL, {
 });
 ```
 
-Gdy ustawimy opcję _credentials_ na _same-origin_, to ciasteczka będą dołączone do zapytania, ale tylko w obrębie tego samego _origin_. Czyli nasz token, który znajduje się w ciasteczku, będzie przesyłany za każdym razem do serwera. Natomiast __[origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin)__ jest tym co widzimy w naszym pasku adresu przeglądarki.
+Gdy ustawimy opcję _credentials_ na _same-origin_, to ciasteczka będą dołączone do zapytania, ale tylko w obrębie tego samego _origin_. Czyli token, który znajduje się w ciasteczku, będzie przesyłany za każdym razem, ale tylko do naszego do serwera. Natomiast __[origin](https://developer.mozilla.org/en-US/docs/Glossary/Origin)__ jest tym co widzimy w naszym pasku adresu przeglądarki. Składa się on z protokołu (HTTP lub HTTPS), domeny oraz portu. Jeżeli któraś z tych trzech rzeczy się różni, to _credentials_ z wartością _same-origin_ zablokuje wysłanie ciasteczka do tego serwera.
 
-<Image alt="Token zapisany w obiekcie localStorage" src='/images/origin.pl.jpg' layout="responsive" width="973" height="253" />
+<Image alt="Origin składa się z protokołu, domeny oraz portu" src='/images/origin.pl.jpg' layout="responsive" width="973" height="253" />
 
 Jako ciekawostkę, można też ustawić opcję _credentials_ na _include_, co umożliwia przesyłanie ciasteczek między róźnymi _origin_, ale to już nie jest bezpieczne ponieważ inne serwery backendowe mogłyby odczytać nasze ciasteczko.
 
 Teraz na backendzie musimy ustawić naszemu ciasteczku flagę _httpOnly_ na _true_. W tym przykładzie serwer jest postawiony na [NodeJS](https://nodejs.org/) przy wsparciu [ExpressJS](https://expressjs.com/).
 
 ```js
-const MAX_AGE_1_MONTH = 1000 * 3600 * 24 * 30;
+const MAX_AGE_1_MONTH = 1000 * 3600 * 24 * 30; // w milisekundach
 res.cookie('access_token', accessToken, {
   httpOnly: true,
   maxAge: MAX_AGE_1_MONTH,
