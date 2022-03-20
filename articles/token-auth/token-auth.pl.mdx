@@ -60,7 +60,7 @@ Przechowywanie danych w localStorage jest jakimś rozwiązaniem, ale trzeba pami
 
 Jak widać, jeżeli strona jest słabo zabezpieczona, to można łatwo pobrać zawartość tokena. Dlatego _localStorage_ to bardzo niebezpieczne rozwiązanie i powinniśmy z niego zrezygnować. Na szczęście mamy jeszcze inne możliwości. Zobaczmy gdzie indziej można zapisać token.
 
-<h2 id="cookie">Pzechowywanie tokena w ciasteczku</h2>
+<h2 id="cookie">Przechowywanie tokena w ciasteczku</h2>
 
 [Ciasteczko](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie) (ang. _cookie_) również pozwala przechowywać informacje na stronie, ale różni się od _localStorage_ tym, że może zostać ustawione zarówno przez serwer backendowy, lub przez aplikacje frontendową. Jeżeli zdecydujemy się na ustawienie ciasteczka na frontendzie, to będzie tak samo jak wcześniej, że ktoś może je wykraść. Dlatego powinniśmy zapisywać ciasteczko z tokenem poprzez serwer. Być może zapytasz - _Co to zmieni jak ustawię ciasteczko przez backend? Przecież to dalej będzie zapisane w przeglądarce_. Tak, to prawda, ale możemy wtedy ustawić pewne flagi, które ograniczą do niego dostęp.
 
