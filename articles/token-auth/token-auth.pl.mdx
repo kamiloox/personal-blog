@@ -126,7 +126,7 @@ res.cookie('access_token', accessToken, {
 });
 ```
 
-Już teraz nasza aplikacja jest o wiele bezpieczniejsza niż to co mieliśmy na początku. Teraz tylko rola serwera backendowego, żeby sprawdzał przychodzące do niego zapytania. Bardzo dobrze do tego nadaje się _middleware_, poniważ weryfikuje czy token jest nieprawidłowy, lub czy go nie ma wcale, a jeżeli wszystko jest poprawne, to zwraca żądany zasób.
+Już teraz nasza aplikacja jest o wiele bezpieczniejsza niż to co mieliśmy na początku. Teraz tylko rola serwera backendowego, żeby sprawdzał przychodzące do niego zapytania. Bardzo dobrze do tego nadaje się _middleware_, ponieważ weryfikuje czy token jest nieprawidłowy, lub czy go nie ma wcale, a jeżeli wszystko jest poprawne, to zwraca żądany zasób.
 
 ```js
 const authMiddleware = (req, res, next) => {
@@ -140,7 +140,7 @@ const authMiddleware = (req, res, next) => {
     jwt.verify(accessToken, getEnv('ACCESS_TOKEN_SECRET'));
     next();
   } catch {
-    return res.status(403).json({ status: 403, message: 'Nieprawidłowy token' });
+    res.status(403).json({ status: 403, message: 'Nieprawidłowy token' });
   }
 };
 ```
