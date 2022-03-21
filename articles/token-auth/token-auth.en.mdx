@@ -1,9 +1,9 @@
 ---
-title: You probably do it wrong, i.e. a token on the frontend 🙅‍♂️
+title: You probably do it wrong - in other words a token on the frontend 🙅‍♂️
 date: 03-19-2022
 category: javascript
 published: true
-excerpt: Storing the token on the frontend is one of the toughest topics for novice developers to understand. But it's worth understanding this topic well because we can't let someone else steal the identity of our users 🔐 🔐
+excerpt: Storing the token on the frontend is one of the toughest topics for novice developers. But it's worth understanding this topic well because we can't let someone steal the identity of our users 🔐
 ---
 
 If you want to go straight to the point, this article essentially covers two methods:
@@ -16,19 +16,19 @@ If you want to go straight to the point, this article essentially covers two met
 
 ## Introduction 
 
-Many applications that are on the network have implemented sign-up and access granting systems. Although such a scenario is often used, programming this is not that easy. The security of web applications is very important as we cannot allow someone to steal the identity of our users. You have to think carefully about it from the backend and frontend sides. Therefore, this article discusses how we should protect the token 🤭
+Many applications on the Internet have implemented sign-up and access granting systems. Although that scenario is common, programming this is not that easy. Security of web applications is very important as we cannot allow someone to steal the identity of our users. You have to think carefully about it from both the backend and frontend side. Therefore, this article discusses how we should protect the token 🤭
 
 ## Confirming identity and granting access
 
-The user entering websites such as Facebook, Youtube or Github must confirm his identity. The backend _authenticates_ him, so it checks if this user is really the person claiming to be. Therefore, when the user makes a request to grab protected resources, the server _authorizes_, so checks if he really has appropriate rights. For that token is needed, which is somewhat of an _ID card_. An ID card can give us some data about a person, and a token works similarly, allowing us to check with who we are dealing with. However, how is such a token issued?
+The user entering website such as Facebook, Youtube or Github is obligated to confirm his identity. The backend _authenticates_ him, so it checks if this user is really the person claiming to be. Therefore, when the user makes a request to grab protected resources, the server _authorizes_ - which means that it checks if user really has appropriate rights. That is where the token is needed, which is something similar to an _ID card_. An ID card can give us some data about a person and the token works similarly, allowing us to check with who we are dealing with. However, how is such a token issued?
 
 <Image alt="The application communicates with the server. The user signs up and signs in, and the server returns him a token" src='/images/auth-flow.en.jpg' layout="responsive" width="993" height="518" />
 
-As you can see, the fifth point says - _user is signed in and his token ..._ Now what is happening with the token? We have to have access to it if we want to perform queries to the server and authenticate that __we are really the person that we claim to be__, so it's worth keeping it in the storage of a browser so that users don't need to sign in every time entering the website.
+As you can see, the fifth point says - _user is signed in and his token ..._. So what is happening later with the token? We have to have access to it, if we want to perform requests to the server and authenticate that __we are really the person who we claim to be__. It's worth keeping it in the storage of a browser, so users wont't need to sign in every time they enter the website.
 
 <h2 id="localStorage">Storing token in the localStorage</h2>
 
-After we happily received the token, we can save it in the __[localStorage](https://developer.mozilla.org/pl/docs/Web/API/Window/localStorage)__ object of a browser. How can we do that?
+After we happily receive the token, we can save it in the __[localStorage](https://developer.mozilla.org/pl/docs/Web/API/Window/localStorage)__ object of a browser. How can we do that?
 
 ```js
 const signInUser = async (login, password) => {
@@ -53,21 +53,21 @@ const signInUser = async (login, password) => {
   }
 };
 ```
-Storing token in the localStorage is one of the possible solutions, but you have to remember that it's saved in the user's browser, and as you may know __everything on the frontend can be checked by anyone, even by a third party__! This method is vulnerable to __[XSS](https://wikipedia.org/wiki/Cross-site_scripting)__ attacks and somebody could inject a script execution on our site, which hijacks user token. After all, we don't want it to end up in the wrong hands.
+Storing token in the localStorage is one of the possibilities to store token, but you have to remember that it's saved in the user's browser and as you may know __everything on the frontend can be checked by anyone, even by a third party app__! This method is vulnerable to __[XSS](https://wikipedia.org/wiki/Cross-site_scripting)__ attacks and somebody could inject a script to our site, which could hijack user token. After all, we don't want it to end up in the wrong hands.
 
 <Image alt="XSS attack, hacker hijacks user token which is saved in the localStorage" src='/images/token-xss.jpg' layout="responsive" width="1034" height="328" />
 
-As you can see, if the website is poorly secured it's easy to steal the token. So you have to avoid using _localStorage_, this solution is very vulnerable and we have to give it up. To our advantage, we have other possibilities. Let's see where else we could save our token.
+As you can see, if the website is poorly secured it's really easy to steal the token. So I don't recommend using _localStorage_, as this solution is very vulnerable and we have to give it up. To our advantage, we have other possibilities. Let's see where else we could save our token.
 
 <h2 id="cookie">Storing token in the cookie</h2>
 
 The [Cookie](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie) also allows you to store information on the site but it differs from _localStorage_ in that it can be set either by the backend server or by the frontend application.
 
-If we decide to set a cookie on the frontend, it will be the same as before that someone could steal it. Therefore, we should save the token cookie through the server. You may ask - _What will be changed if I set a cookie on the backend? It will still be saved in the browser_. Yes, it's true, but we can set some flags that will block access to cookies.
+If we decide to set a cookie on the frontend, situation will repeat as someone could still steal it. Therefore, we should save the token in cookie through the server. You may ask - _What will be changed if I set a cookie on the backend? It will still be saved in the browser_. Yes, it's true, but we can set some flags that will block access to cookies.
 
 <h3 id="httpOnly">httpOnly flag</h3>
 
-Enabled _httpOnly_ flag prevents the cookie from being read in the application and if we check the content of _document.cookie_, it won't be there, which gives us better protection. We also make the process of attaching cookie with token on the frontend easier, we don't need to worry about adding the token in the header, because it's visible in every single request.
+Enabling _httpOnly_ flag prevents the cookie from being read in the application. If we check the content of _document.cookie_, it won't be there, which gives us better protection. We also make the process of attaching cookie with token on the frontend easier, we don't need to worry about adding the token in the header, because it's visible in every single request.
 
 For example, let's assume that backend and frontend are at the same address. We do request on the frontend using the _fetch_ function, which is builtin to browser, but to have a token attached we have to set one option.
 
@@ -81,7 +81,7 @@ fetch(signInURL, {
   body: JSON.stringify({ login, password }),
 });
 ```
-When we set the _credentials_ option to _same-origin_, cookies will be attached to the query, but only within the same _origin_. So the token in the cookie will be sent every time, but only to our server. However __ [origin] (https://developer.mozilla.org/en-US/docs/Glossary/Origin) __ is what we see in our browser address bar. It consists of a protocol (HTTP or HTTPS), a domain, and a port. If any of these three things are different, _credentials_ with a value of _same-origin_ would block sending a cookie to that server.
+When we set the _credentials_ option to _same-origin_, cookies will be attached to the query, but only within the same _origin_. So the token in the cookie will be sent every time, but only to our server. However __ [origin] (https://developer.mozilla.org/en-US/docs/Glossary/Origin) __ is what we see in our browser address bar. It consists of a protocol (HTTP or HTTPS), a domain, and a port. If any of these three things are different, _credentials_ with a value of _same-origin_ would block sending a cookie to that address.
 
 <Image alt="Origin consists of a protocol, a domain, and a port" src='/images/origin.en.jpg' layout="responsive" width="973" height="253" />
 
@@ -97,11 +97,11 @@ res.cookie('access_token', accessToken, {
 });
 ```
 
-And we already have more secure authorization in our application. The _access\_token_ cookie won't be returned when we check the content of a _document.cookie_ on the frontend.
+And we already have way more secure authorization in our application. The _access\_token_ cookie won't be returned when we check the content of a _document.cookie_ on the frontend.
 
 <h3 id="secure">secure flag</h3>
 
-A cookie with the _secure_ flag, as the name might suggest, is only sent to the server when the request is encrypted with the _HTTPS_ protocol. If our website does not use this protocol, the token wouldn't be sent. This protects us from users who may reach our website using the _HTTP_ protocol, which later will send _dangerous_ requests.
+A cookie with the _secure_ flag, as the name might suggest, is only sent to the server when the request is encrypted with the _HTTPS_ protocol. If our website does not use this protocol, the token will not be sent. This protects us from users who may reach our website using the _HTTP_ protocol, which later will send _dangerous_ requests.
 
 ```js
 res.cookie('access_token', accessToken, {
@@ -113,9 +113,9 @@ res.cookie('access_token', accessToken, {
 
 <h3 id="sameSite">sameSite flag</h3>
 
-The _sameSite_ flag restricts domains from which authorized queries could be sent. It protects us against websites that tries to reach our website with the token attached. So no one from an unauthorized site will be able to download resources that they do not have access to, even if such someone has a token in the cookie. This type of attack is called [CSRF] (https://wikipedia.org/wiki/Cross-site_request_forgery).
+The _sameSite_ flag restricts domains from which authorized queries could be sent. It protects us against websites that tries to reach our website with the token attached. So no one from an unauthorized site will be able to download resources that they do not have access to, even if someone has a token in the cookie. This type of attack is called [CSRF] (https://wikipedia.org/wiki/Cross-site_request_forgery).
 
-For a _sameSite_ you could also assign value _secure_ but this option is too restrictive and blocks links that are on other sites and links to our site. Therefore is also the _Lax_ option, which is the golden mean, because blocks cookies from other domains, but allows you to redirect to our website.
+For a _sameSite_ you can also assign value _secure_ but this option is too restrictive and blocks links that are on other sites which leads to our site. Therefore, there is also the _Lax_ option, which is the golden mean, because it blocks cookies from other domains, but allows you to redirect to our website.
 
 ```js
 res.cookie('access_token', accessToken, {
@@ -126,7 +126,7 @@ res.cookie('access_token', accessToken, {
 });
 ```
 
-Our application is already much safer than what we had at the beginning. Now only the backend server has to check the incoming cookies. For this, the _Middleware_ is very well suited, as it verifies if the token is invalid or if it's not attached, and if everything is good it returns the requested resource.
+Our application is already much safer than what we had at the beginning. Now, only the backend server has to check the incoming cookies. For this, the _Middleware_ is very well suited, as it verifies if the token is invalid or if it's not attached. If everything is good it returns the requested resource.
 
 ```js
 const authMiddleware = (req, res, next) => {

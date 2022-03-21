@@ -3,14 +3,14 @@ title: Misleading methods 🤷‍♂️
 date: 02-27-2022
 category: javascript
 published: true
-excerpt: Have you ever used method split, splice, or splice? To be continued. I use them sometimes, and I have a hard time differentiating them because all of them look and sound similar. However, maybe there is a way how to remember them? Let's see.
+excerpt: Have you ever used methods split, splice, or slice? I use them sometimes and I have a hard time differentiating them because all of them look and sound similar. However, maybe there is a way how to remember them? Let's see.
 ---
 
-Have you ever used a method split, splice, or slice? If you had and never looked in documentation while you were using it, you are a lucky guy. I always need to take a look because all of them sound similar. However, maybe there is a way how to differentiate them? Let's see.
+Have you ever used a method split, splice, or slice? If you had and you have never looked into documentation while using it, you are a lucky guy. I always need to take a look because all of them beeing similar. However, maybe there is a way how to differentiate them? Let's see.
 
 ## Splice
 
-`Splice` changes a structure of an array - removes elements, replaces them, or add new ones. The first argument it takes is an index that indicates starting point. The second argument is optional and specifies a count of elements to modify. Other arguments are optional too and define elements that we want to add. __However, don't forget that splice mutates a content of an array!__.
+`Splice` changes a structure of an array - removes elements, replaces them or adds new ones. The first argument it takes is an index that indicates starting point. The second argument is optional and specifies a number of elements to modify. Other arguments are also optional and define elements that we want to add. __However, don't forget that splice mutates a content of an array!__.
 
 ```js
 // splice(start, deleteCount, element1, element2, elementN)
@@ -22,7 +22,7 @@ array.splice(2, 0, 'element-1', 'element-2');
 ["zero", "first", "element-1", "element-2", "second", "third"]
 console.log(array)
 
-// removes from index -2 (it's 2nd from the end) two elements
+// remove two elements from index -2 (it's 2nd from the end)
 const removed = array.splice(-2, 2);
 
 // ["second", "third"] 
@@ -40,9 +40,9 @@ console.log(array);
 
 ## Slice
 
-It's very similar to `splice` but with one huge difference - returns __[shallow copy](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy)__ of an array, so In practice we have a reference that points to this array.
+Despite beeing very similar to `splice` it has one huge difference - it returns __[shallow copy](https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy)__ of an array, so in practice we have a reference that points to this array.
 
-If the slice returns an object of the array and one value in this array will be changed, this change will have an impact on a starting array because we are working on a reference! It's a very huge threat. When somebody makes a modification of an object later can happen weird and unexpected situations. However, we can omit this by using __[deep copy](https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy)__. Then every mutation won't change both arrays.
+If the `slice` returns an object of the array and one value in this array is changed, this change will have a serious impact on a starting array - because now we will be working on a reference! It's a very huge threat. When someone will make a modification on that object later, some weird and unexpected situations can occur. We can prevent that by using __[deep copy](https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy)__. Then every mutation won't change both arrays.
 
 ```js
 // Shallow copy
@@ -64,7 +64,7 @@ deep[0].value = 'modified';
 console.log(array2[0]);
 ```
 
-Slice exists on string prototype too. It allows the extraction of specific fragments of text. However, we can use it as similar as with arrays. For the first argument, it takes starting index and for a second an ending index.
+Slice exists on string prototype too. It allows to extract specific fragments of a text. Is's usage is similar for an array usage. For the first argument, it takes starting index and for a second an ending index.
 
 ```js
 const introduction = 'Hi! My name is Kamil';
@@ -76,13 +76,13 @@ console.log(name);
 
 const greeting = introduction.slice(0, 3);
 
-// Cześć!
+// Hi!
 console.log(greeting);
 ```
 
 ## Split
 
-Split divides string for smaller parts, which later are placed in an array. It takes the separator as an argument. For example, it could be a space, comma, or even a long fragment of text.
+Split creates a new array with smaller parts of the string, that has been divided. It takes the separator as an argument. For example, it could be a space, comma, or even a long fragment of text.
 
 
 ```js
@@ -95,7 +95,7 @@ const splitted = sentence.split(' ');
 console.log(splitted);
 ```
 
-As a curiosity, the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) for a string works in the same way as a split with an empty string.
+As a curiosity, the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) for a string, works in the same way as a split with an empty string.
 
 ```js
 const sentence = 'Halooo!';
@@ -109,4 +109,4 @@ console.log(sentence)
 
 ## Summary
 
-Despite the big similarity, we can actually differentiate these methods. `Slice` we can use either for string or array. But `Split` and `splice` we can use only for arrays. For sure huge impact is playing our development environment when it suggests arguments that functions take. I hope that if next time I'll use those methods I wouldn't take a look at them at the documentation. But we all know how it happens in life - _our memory is good but short_ 🤷‍♂️
+Despite the similarities, we can actually differentiate these methods. `Slice` can be used either for string or array. But `split` and `splice` can be used only for arrays. Surely, our IDE plays a huge role is while suggesting arguments that methods take. I hope that next time when I'll be using those methods I wouldn't need to take a look at the documentation. But we all know how it happens in life - _our memory is good but short_ 🤷‍♂️
