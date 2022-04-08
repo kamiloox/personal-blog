@@ -27,6 +27,8 @@ export const Layout = ({
       openGraph={{
         title,
         description,
+        locale,
+        url: `${FULL_ADDRESS}${locale === 'pl' ? '/pl' : ''}`,
         images: [
           {
             url: `${FULL_ADDRESS}/images/og-hero.${locale}.jpg`,
@@ -36,6 +38,7 @@ export const Layout = ({
           },
         ],
       }}
+      additionalMetaTags={[{ name: 'og:locale:alternate', content: locale === 'en' ? 'pl' : 'en' }]}
     />
     <Header isHome={isHome} />
     <main>{children}</main>

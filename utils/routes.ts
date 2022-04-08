@@ -1,6 +1,6 @@
 export const externalRoutes = {
   github: 'https://github.com/kamiloox',
-  linkedin: 'https://www.linkedin.com/in/kamiloox/',
+  linkedin: 'https://www.linkedin.com/in/kamiltroczewski',
 } as const;
 
 export const routes = {

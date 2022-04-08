@@ -1,6 +1,6 @@
 # Personal blog - [troczewski.dev](https://www.troczewski.dev/) 👀
 
-![Troczewski.dev](public/images/og-hero.jpg)
+![Troczewski.dev](public/images/og-hero.en.jpg)
 
 ## Blog and a portfolio at once 🔥
 
