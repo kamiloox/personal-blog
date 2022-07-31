@@ -1,0 +1,131 @@
+---
+title: CSS Variables with animations 😶‍🌫️
+date: 07-31-2022
+category: css
+published: true
+excerpt: Have you ever tried doing simple animations in JavaScript? If so, check how CSS variables makes our lifes easier.
+---
+
+When we are building single-page applications e.g. with React.js we are sometimes mixing stylesheets with logic. That’s not a really good practice, because we want to move the responsibility of how our page will look to CSS. Take a look at this example.
+
+```js
+export const EmojisList = () => {
+  const emojis = [
+    { id: 1, emoji: '🥰' },
+    { id: 2, emoji: '😎' },
+    { id: 3, emoji: '🤨' },
+    { id: 4, emoji: '🤗' },
+    { id: 5, emoji: '😳' },
+  ];
+  return (
+    <ul className="list">
+      {emojis.map(({ id, emoji }, index) => (
+        <li key={id} className="list__item">
+          I am {index + 1} emoji {emoji}
+        </li>
+      ))}
+    </ul>
+  );
+};
+```
+
+We are mapping the emojis and displaying them in a list. Nothing is complicated here. But let’s say that we want to make a cool animation and display every element of the list sequentially i.e. stagger them. So the first idea that can come to our minds might be to apply different classes and handle them appropriately.
+
+```js
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li key={id} className={cx('list__item', `list__item--${index}`)}>
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+)
+```
+
+So there is a new class with an index suffix. But that’s a problem because we have to add every class to a CSS file 🤨
+
+```css
+.list__item--1 {
+  animation-delay: 0.3s;
+}
+
+.list__item--2 {
+  animation-delay: 0.6s;
+}
+
+.list__item--3 {
+  animation-delay: 0.9s;
+}
+
+/* ... */
+
+.list__item--123 {
+  /* Do we really need subsequent element 😫 */
+}
+```
+
+As you can see this solution is fine if we don’t have that many elements. But if we need to add a new item we need to have it in sync with logic. One way of simplifying that might be to avoid adding those classes and just add an `nth-child()` selector. But our CSS could be as large as previously. So maybe, we should apply styles directly to the element in JavaScript?
+
+```js
+const DELAY = 0.3;
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li
+        key={id}
+        className="list__item"
+        style={{
+          animationDelay: `${index * DELAY}s`,
+        }}
+      >
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+);
+```
+
+Fine, this got better and I really like this much more. But as I noted in the preface of this article adding CSS definitions in JavaScript is not ideal. We don’t want to have styles here. So that’s why CSS variables come to the rescue.
+
+```ts
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li key={id} className="list__item" style={{ '--i': index } as CSSProperties}>
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+);
+```
+
+CSS Variables are a powerful feature. We are applying to every element an index variable and later we can reference that value from CSS.
+
+<Callout>If you are doing this with React.js and TypeScript add a type assertion as CSSProperties because otherwise, the compiler won’t accept this value.</Callout>
+
+```css
+.list__item {
+  --delay: 0.15s;
+  --duration: 0.3s;
+
+  /* Your custom animation */
+  animation-name: slide-in;
+  animation-fill-mode: both;
+  animation-duration: var(--duration);
+  animation-timing-function: ease-in-out;
+
+  animation-delay: calc(var(--i) * var(--delay));
+}
+```
+
+Now everything is in the CSS file and the count of elements isn’t a problem. The index variable can be used in calculations. Isn’t it awesome? 🤯
+
+<div style={{ textAlign: 'center' }}>
+  <Image
+    alt="staggered list"
+    src="/gifs/staggered-list.gif"
+    width="386"
+    height="276"
+  />
+</div>

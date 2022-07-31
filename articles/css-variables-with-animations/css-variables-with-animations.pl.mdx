@@ -1,0 +1,128 @@
+---
+title: Zmienne CSS z animacjami 😶‍🌫️
+date: 07-31-2022
+category: css
+published: true
+excerpt: Czy kiedykolwiek próbowałeś robić proste animacje z poziomu JavaScripta? Jeżeli tak, to sprawdź jak zmienne CSS upraszczają nam życie.
+---
+
+Kiedy budujemy aplikacje typu single-page (en. <i>SPA</i>) np. z pomocą Reakta to czasami zdarza się mieszać style z logiką JavaScripta. To nie jest dobre podejście ponieważ, to jak strona powinna wyglądać powinno należeć tylko do CSSa. Zwróćmy uwagę na pewien przykład.
+
+```js
+export const EmojisList = () => {
+  const emojis = [
+    { id: 1, emoji: '🥰' },
+    { id: 2, emoji: '😎' },
+    { id: 3, emoji: '🤨' },
+    { id: 4, emoji: '🤗' },
+    { id: 5, emoji: '😳' },
+  ];
+  return (
+    <ul className="list">
+      {emojis.map(({ id, emoji }, index) => (
+        <li key={id} className="list__item">
+          I am {index + 1} emoji {emoji}
+        </li>
+      ))}
+    </ul>
+  );
+};
+```
+
+W powyższym przykładzie mapujemy tablicę z emoji a następnie je wyświetlamy, nic skomplikowanego. Ale uznajmy, że chcemy dodać tutaj jakąś super animacje, żeby elementy ujawniały się kolejno jeden za drugim (en. <i>staggered animation</i>). Można każdemu z nich dodać odpowiednią klasę a następnie w stylach prawidłowo to obsłużyć.
+
+```js
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li key={id} className={cx('list__item', `list__item--${index}`)}>
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+)
+```
+Elementom dodajemy klasy z przyrostkiem `index`. Tylko tutaj pojawia się pewien problem, ponieważ trzeba tą każdą klasę dodać do pliku CSS 🤨
+
+```css
+.list__item--1 {
+  animation-delay: 0.3s;
+}
+
+.list__item--2 {
+  animation-delay: 0.6s;
+}
+
+.list__item--3 {
+  animation-delay: 0.9s;
+}
+
+/* ... */
+
+.list__item--123 {
+  /* Czy naprawdę potrzebujemy tyle elementów? 😫 */
+}
+```
+
+Jak widać to rozwiązanie jest nawet w porządku, ale tylko gdy nie ma wiele elementów. Jedną opcją, żeby ten problem usunąć może być zrezygnowanie z tworzenia nowych klas i skorzystanie z selektora `nth-child()`. Ale dlugość pliku CSS dalej będzie taka sama. Z drugiej strony jeżeli jest potrzeba dodać kolejny element do listy to trzeba stworzyć nową klasę co bardzo utrudnia. To może powinniśmy dodać style bezpośrednio w plikach JavaScripta? 
+
+```js
+const DELAY = 0.3;
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li
+        key={id}
+        className="list__item"
+        style={{
+          animationDelay: `${index * DELAY}s`,
+        }}
+      >
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+);
+```
+To już wygląda o wiele lepiej, to podejście bardziej do mnie przemawia. Ale tak jak pisałem na początku tego artykułu, dodawania reguł CSSa z poziomu JavaScripta nie jest dobre. Dlatego tutaj przychodzą nam z pomocą zmienne CSSowe.
+
+```ts
+return (
+  <ul className="list">
+    {emojis.map(({ id, emoji }, index) => (
+      <li key={id} className="list__item" style={{ '--i': index } as CSSProperties}>
+        I am {index + 1} emoji {emoji}
+      </li>
+    ))}
+  </ul>
+);
+```
+Zmienne CSS są bardzo potężnym featurem. Do każdego elementu przypisywana jest zmienna `--i` z wartością aktualnego indeksu do którego póżniej można odnieść się z poziomu CSSa. Inaczej mówiąc z poziomu styli wiadomo jaki aktualny element listy jest brany pod uwagę. 
+
+<Callout>Jeżeli robisz ten przykład z Reaktem i TypeScriptem dodaj asercje typu `as CSSProperties` ponieważ inaczej kompilator nie pozwoli przepuścić Ci tej zmiennej.</Callout>
+
+```css
+.list__item {
+  --delay: 0.15s;
+  --duration: 0.3s;
+
+  /* Your custom animation */
+  animation-name: slide-in;
+  animation-fill-mode: both;
+  animation-duration: var(--duration);
+  animation-timing-function: ease-in-out;
+
+  animation-delay: calc(var(--i) * var(--delay));
+}
+```
+
+Teraz wszystko znajduję się w pliku CSS i ilość emoji już nie jest problem. Zmiena `--i` może być używana w obliczeniach. Czy to nie jest niesamowite? 🤯
+
+<div style={{ textAlign: 'center' }}>
+  <Image
+    alt="staggered list"
+    src="/gifs/staggered-list.gif"
+    width="386"
+    height="276"
+  />
+</div>
