@@ -6,7 +6,7 @@ published: true
 excerpt: Czy kiedykolwiek próbowałeś robić proste animacje z poziomu JavaScripta? Jeżeli tak, to sprawdź jak zmienne CSS upraszczają nam życie.
 ---
 
-Kiedy budujemy aplikacje typu single-page (en. <i>SPA</i>) np. z pomocą Reakta to czasami zdarza się mieszać style z logiką JavaScripta. To nie jest dobre podejście ponieważ, to jak strona powinna wyglądać powinno należeć tylko do CSSa. Zwróćmy uwagę na pewien przykład.
+Kiedy budujemy aplikacje typu single-page np. z pomocą Reakta to czasami zdarza się mieszać style z logiką JavaScripta. To nie jest dobre podejście ponieważ, to jak strona powinna wyglądać powinno należeć tylko do CSSa. Zwróćmy uwagę na pewien przykład.
 
 ```js
 export const EmojisList = () => {
@@ -29,7 +29,7 @@ export const EmojisList = () => {
 };
 ```
 
-W powyższym przykładzie mapujemy tablicę z emoji a następnie je wyświetlamy, nic skomplikowanego. Ale uznajmy, że chcemy dodać tutaj jakąś super animacje, żeby elementy ujawniały się kolejno jeden za drugim (en. <i>staggered animation</i>). Można każdemu z nich dodać odpowiednią klasę a następnie w stylach prawidłowo to obsłużyć.
+W powyższym przykładzie mapujemy tablicę z emoji a następnie je wyświetlamy, nic skomplikowanego. Ale uznajmy, że chcemy dodać tutaj jakąś super animacje, żeby elementy ujawniały się kolejno jeden za drugim (ang. <i>staggered animation</i>). Można każdemu z nich dodać odpowiednią klasę a następnie w stylach prawidłowo to obsłużyć.
 
 ```js
 return (
@@ -42,7 +42,7 @@ return (
   </ul>
 )
 ```
-Elementom dodajemy klasy z przyrostkiem `index`. Tylko tutaj pojawia się pewien problem, ponieważ trzeba tą każdą klasę dodać do pliku CSS 🤨
+Elementom dodajemy klasy z przyrostkiem `index`. Tylko tutaj pojawia się pewien problem, ponieważ trzeba tę każdą klasę dodać do pliku CSS 🤨
 
 ```css
 .list__item--1 {
@@ -64,7 +64,7 @@ Elementom dodajemy klasy z przyrostkiem `index`. Tylko tutaj pojawia się pewien
 }
 ```
 
-Jak widać to rozwiązanie jest nawet w porządku, ale tylko gdy nie ma wiele elementów. Jedną opcją, żeby ten problem usunąć może być zrezygnowanie z tworzenia nowych klas i skorzystanie z selektora `nth-child()`. Ale dlugość pliku CSS dalej będzie taka sama. Z drugiej strony jeżeli jest potrzeba dodać kolejny element do listy to trzeba stworzyć nową klasę co bardzo utrudnia. To może powinniśmy dodać style bezpośrednio w plikach JavaScripta? 
+Jak widać to rozwiązanie jest nawet dobre, ale tylko gdy nie ma wiele elementów. Jedną opcją, żeby ten problem uprościć może być zrezygnowanie z tworzenia nowych klas i skorzystanie z selektora `nth-child()`. Ale dlugość pliku CSS dalej będzie taka sama. Z drugiej strony jeżeli jest potrzeba dodać kolejny element do listy to trzeba stworzyć nową klasę co bardzo utrudnia. To może powinniśmy dodać style bezpośrednio w plikach JavaScripta? 
 
 ```js
 const DELAY = 0.3;
@@ -84,7 +84,8 @@ return (
   </ul>
 );
 ```
-To już wygląda o wiele lepiej, to podejście bardziej do mnie przemawia. Ale tak jak pisałem na początku tego artykułu, dodawania reguł CSSa z poziomu JavaScripta nie jest dobre. Dlatego tutaj przychodzą nam z pomocą zmienne CSSowe.
+
+To już wygląda o wiele lepiej. Ale tak jak pisałem na początku tego artykułu, dodawanie reguł CSSa z poziomu JavaScripta nie jest dobre. Dlatego tutaj przychodzą nam z pomocą zmienne CSSowe.
 
 ```ts
 return (
@@ -97,7 +98,7 @@ return (
   </ul>
 );
 ```
-Zmienne CSS są bardzo potężnym featurem. Do każdego elementu przypisywana jest zmienna `--i` z wartością aktualnego indeksu do którego póżniej można odnieść się z poziomu CSSa. Inaczej mówiąc z poziomu styli wiadomo jaki aktualny element listy jest brany pod uwagę. 
+Jak widać zmienne CSS są naprawde bardzo pomocne. W powyższym przykładzie do każdego elementu przypisywana jest zmienna `--i` z wartością aktualnego indeksu do którego póżniej można odnieść się z poziomu CSSa. Inaczej mówiąc z poziomu styli wiadomo jaki aktualny element listy jest brany pod uwagę. 
 
 <Callout>Jeżeli robisz ten przykład z Reaktem i TypeScriptem dodaj asercje typu `as CSSProperties` ponieważ inaczej kompilator nie pozwoli przepuścić Ci tej zmiennej.</Callout>
 
