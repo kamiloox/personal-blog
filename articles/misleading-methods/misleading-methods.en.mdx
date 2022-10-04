@@ -6,11 +6,11 @@ published: true
 excerpt: Have you ever used methods split, splice, or slice? I use them sometimes and I have a hard time differentiating them because all of them look and sound similar. However, maybe there is a way how to remember them? Let's see.
 ---
 
-Have you ever used a method split, splice, or slice? If you had and you have never looked into documentation while using it, you are a lucky guy. I always need to take a look because all of them beeing similar. However, maybe there is a way how to differentiate them? Let's see.
+Have you ever used a method split, splice, or slice? If you had and you have never looked into documentation while using it, you are a lucky guy. I always need to take a look because all of them are so similar to each other. However, maybe there is a way how to differentiate them? Let's see.
 
 ## Splice
 
-`Splice` changes a structure of an array - removes elements, replaces them or adds new ones. The first argument it takes is an index that indicates starting point. The second argument is optional and specifies a number of elements to modify. Other arguments are also optional and define elements that we want to add. __However, don't forget that splice mutates a content of an array!__.
+`Splice` changes a structure of an array - removes elements, replaces them or adds new ones. The first argument it takes is an index that indicates starting point. The second argument is optional and specifies a number of elements to modify. Other arguments are also optional and define elements that we want to add. __However, don't forget that splice mutates a content of an array!__
 
 ```js
 // splice(start, deleteCount, element1, element2, elementN)
@@ -64,7 +64,7 @@ deep[0].value = 'modified';
 console.log(array2[0]);
 ```
 
-Slice exists on string prototype too. It allows to extract specific fragments of a text. Is's usage is similar for an array usage. For the first argument, it takes starting index and for a second an ending index.
+We can use Slice on string prototype too. It allows to extract specific fragments of a text. It's usage is similar to an array usage. As the first argument, it takes starting index and as a second - an ending index.
 
 ```js
 const introduction = 'Hi! My name is Kamil';
